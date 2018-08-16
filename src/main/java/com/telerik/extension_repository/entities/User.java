@@ -19,14 +19,6 @@ public class User implements UserDetails {
 
     private String email;
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     private boolean isAccountNonExpired;
 
     private boolean isAccountNonLocked;
@@ -34,6 +26,14 @@ public class User implements UserDetails {
     private boolean isCredentialsNonExpired;
 
     private boolean isEnabled;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_authorities",
