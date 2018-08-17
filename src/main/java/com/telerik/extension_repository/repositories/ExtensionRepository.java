@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ExtensionRepository extends JpaRepository<Extension,Integer> {
+
     Extension findOneByName(String name);
 
     @Query(value = "SELECT e FROM Extension AS e")
