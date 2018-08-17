@@ -5,14 +5,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-@RequestMapping("/login_register")
+@RequestMapping("/users")
 public class LoginRegisterController {
 
-    @GetMapping()
-    public String createHomePage(Model model) {
-        return "login_and_register_tabbed_form";
+    @GetMapping("/login")
+    public String getLoginPage() {
+        return "login";
+    }
+
+    @GetMapping("/register")
+    public String getRegisterPage() {
+        return "register";
     }
 
 }
