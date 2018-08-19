@@ -32,10 +32,10 @@ public class UserServiceImpl implements UserService{
         User user = this.modelMapper.map(registrationModel, User.class);
         String encryptedPassword = this.bCryptPasswordEncoder.encode(registrationModel.getPassword());
         user.setPassword(encryptedPassword);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setEnabled(true);
-        user.setCredentialsNonExpired(true);
+//        user.setAccountNonExpired(true);
+//        user.setAccountNonLocked(true);
+//        user.setEnabled(true);
+//        user.setCredentialsNonExpired(true);
         this.userRepository.save(user);
     }
 

@@ -33,20 +33,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/users/register", "/login/**").permitAll()
-                .antMatchers("/users/login").permitAll()
-                .anyRequest().authenticated();
-//                .exceptionHandling().accessDeniedPage("/no-access")
-//                .and()
-//                .csrf()
-//                .disable()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/home").permitAll()
-//                .antMatchers("/register").permitAll()
-//                .antMatchers("/authenticate").permitAll()
-//                .antMatchers("/**").authenticated();
+                .antMatchers("/user/**").access("hasRole('ADMIN') OR hasRole('USER')")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().loginPage("/users/login").permitAll()
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .and()
+                .rememberMe()
+                .rememberMeCookieName("RememberMeFromLecture")
+                .rememberMeParameter("rememberMe")
+                .key("randomKey")
+                .tokenValiditySeconds(1000)
+                .and()
+                .logout().logoutSuccessUrl("/login?logout").permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/unauthorized")
+                .and()
+                .csrf().disable();
     }
 
     @Bean

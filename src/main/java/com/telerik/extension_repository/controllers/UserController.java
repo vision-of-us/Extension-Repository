@@ -11,10 +11,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/users")
-public class LoginRegisterController {
+public class UserController {
 
     @Autowired
     private UserService userService;
@@ -43,6 +44,18 @@ public class LoginRegisterController {
         return "login";
     }
 
+    @GetMapping("/user")
+    public String getUserPage(Principal principal){
+        System.out.println(principal.getName());
+        //this.userService.delete();
+        return "user";
+    }
+
+    @GetMapping("/admin")
+    public String getAdminPage(){
+
+        return "admin";
+    }
 
 
     @PostMapping("/register")
