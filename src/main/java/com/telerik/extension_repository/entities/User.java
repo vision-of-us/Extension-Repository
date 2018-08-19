@@ -27,19 +27,15 @@ public class User implements UserDetails {
 
     private boolean isEnabled;
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_authorities",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities;
+
+    public long getId() {
+        return id;
+    }
 
     @Override
     public Set<Authority> getAuthorities() {
@@ -54,6 +50,10 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override
@@ -76,8 +76,8 @@ public class User implements UserDetails {
         return isEnabled;
     }
 
-    public long getId() {
-        return id;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setUsername(String username) {

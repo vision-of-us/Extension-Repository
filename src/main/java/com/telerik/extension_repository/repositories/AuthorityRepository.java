@@ -9,6 +9,7 @@ import java.util.Set;
 @Repository
 public interface AuthorityRepository extends JpaRepository<Authority, Integer> {
 
+    // TODO documentation
     Set<Authority> findAllByAuthorityIn(String[] names);
 
 }

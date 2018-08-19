@@ -12,6 +12,14 @@ public interface ExtensionRepository extends JpaRepository<Extension,Integer> {
 
     Extension findOneByName(String name);
 
+    void deleteByName(String name);
+
+    // TODO documentation
+    Extension save(Extension extension);
+
     @Query(value = "SELECT e FROM Extension AS e")
     List<Extension> findAll();
+
+
+
 }

@@ -1,10 +1,15 @@
 package com.telerik.extension_repository.services;
 
+import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.models.bindingModels.EditUserModel;
 import com.telerik.extension_repository.models.bindingModels.RegisterUserModel;
 import com.telerik.extension_repository.models.viewModels.UserModel;
+import com.telerik.extension_repository.repositories.UserRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +17,25 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService{
 
-    @Override
-    public void persist(RegisterUserModel userModel) {
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Override
+    public void register(RegisterUserModel registrationModel) {
+        User user = this.modelMapper.map(registrationModel, User.class);
+        String encryptedPassword = this.bCryptPasswordEncoder.encode(registrationModel.getPassword());
+        user.setPassword(encryptedPassword);
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setEnabled(true);
+        user.setCredentialsNonExpired(true);
+        this.userRepository.save(user);
     }
 
     @Override
@@ -29,6 +50,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void edit(EditUserModel editUserModel) {
+
+    }
+
+    @Override
+    public void delete() {
 
     }
 
