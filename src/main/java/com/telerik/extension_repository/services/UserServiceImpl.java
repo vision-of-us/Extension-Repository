@@ -1,6 +1,7 @@
 package com.telerik.extension_repository.services;
 
 import com.telerik.extension_repository.entities.User;
+import com.telerik.extension_repository.errors.Errors;
 import com.telerik.extension_repository.models.bindingModels.EditUserModel;
 import com.telerik.extension_repository.models.bindingModels.RegisterUserModel;
 import com.telerik.extension_repository.models.viewModels.UserModel;
@@ -60,6 +61,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        User user = this.userRepository.findOneByUsername(username);
+        if(user == null){
+            throw new UsernameNotFoundException(Errors.INVALID_CREDENTIALS);
+        }
+
+        return user;
     }
 }

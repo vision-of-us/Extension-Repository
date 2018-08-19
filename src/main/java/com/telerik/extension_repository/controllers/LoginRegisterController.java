@@ -15,8 +15,14 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/users")
 public class LoginRegisterController {
+
     @Autowired
     private UserService userService;
+
+    @GetMapping("/register")
+    public String getRegisterPage(@ModelAttribute("registrationModel") RegisterUserModel registrationModel){
+        return "register";
+    }
 
 //    @GetMapping("/login")
 //    public String getLoginPage() {
@@ -37,13 +43,10 @@ public class LoginRegisterController {
         return "login";
     }
 
-    @GetMapping("/register")
-    public String getRegisterPage(@ModelAttribute RegisterUserModel registrationModel){
-        return "register";
-    }
+
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute RegisterUserModel registrationModel, BindingResult bindingResult){
+    public String registerUser(@Valid @ModelAttribute("registrationModel") RegisterUserModel registrationModel, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "register";
         }
