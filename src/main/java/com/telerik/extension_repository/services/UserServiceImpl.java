@@ -6,7 +6,7 @@ import com.telerik.extension_repository.models.bindingModels.EditUserModel;
 import com.telerik.extension_repository.models.bindingModels.LoggedUser;
 import com.telerik.extension_repository.models.bindingModels.LoginUser;
 import com.telerik.extension_repository.models.bindingModels.RegisterUserModel;
-import com.telerik.extension_repository.models.viewModels.UserModel;
+import com.telerik.extension_repository.models.viewModels.UserModelView;
 import com.telerik.extension_repository.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,14 +43,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<UserModel> getAll() {
+    public List<UserModelView> getAll() {
         List<User> users = this.userRepository.findAll();
-        List<UserModel> userModels = new ArrayList<>();
+        List<UserModelView> userModelViews = new ArrayList<>();
         for (User user : users) {
-            UserModel userModel = this.modelMapper.map(user, UserModel.class);
-            userModels.add(userModel);
+            UserModelView userModelView = this.modelMapper.map(user, UserModelView.class);
+            userModelViews.add(userModelView);
         }
-        return userModels;
+        return userModelViews;
     }
 
     @Override

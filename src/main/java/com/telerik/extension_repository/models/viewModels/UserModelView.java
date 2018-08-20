@@ -1,6 +1,6 @@
 package com.telerik.extension_repository.models.viewModels;
 
-public class UserModel {
+public class UserModelView {
     private Long id;
     private String username;
     private Boolean isEnabled;

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Admin</title>
+<head th:replace="~{fragments/head}">
 </head>
 <body>
-    <h1>Base-Layout</h1>
+<header th:replace="~{fragments/header}"></header>
+<div th:replace="${view}"></div>
+<script th:replace="~{fragments/footer}"></script>
 </body>
 </html>

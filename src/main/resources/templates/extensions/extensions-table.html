@@ -1,0 +1,36 @@
+<div class="container" xmlns:th="http://www.w3.org/1999/xhtml">
+    <a th:if="${session.user}" href="/extensions/add" class="btn btn-warning m-1"><strong>+</strong> Add Extension</a>
+    <div class="row" style="padding: 10px">
+            <form>
+                <div class="input-group">
+                    <input type="text" class="form-control" name="make" placeholder="Name..."/>
+                    <span class="input-group-btn">
+                    <input type="submit" class="btn btn-primary " value="Find" />
+                </span>
+                </div>
+            </form>
+
+    </div>
+
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+
+            <th>Name</th>
+            <th>Description</th>
+            <th>Number of downloads</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="extension : ${extensions}">
+            <th scope="row" th:text="${extension.name}"></th>
+            <td th:text="${extension.description}"></td>
+            <td th:text="${extension.number_of_downloads)}"></td>
+            <!--<td>-->
+                <!--<a th:href="@{/cars/{id}/parts(id=${car.id})}">Details</a>-->
+            <!--</td>-->
+        </tr>
+        </tbody>
+    </table>
+</div>
+

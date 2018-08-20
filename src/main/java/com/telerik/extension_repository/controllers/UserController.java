@@ -5,7 +5,7 @@ import com.telerik.extension_repository.errors.Errors;
 import com.telerik.extension_repository.models.bindingModels.LoggedUser;
 import com.telerik.extension_repository.models.bindingModels.LoginUser;
 import com.telerik.extension_repository.models.bindingModels.RegisterUserModel;
-import com.telerik.extension_repository.models.viewModels.UserModel;
+import com.telerik.extension_repository.models.viewModels.UserModelView;
 import com.telerik.extension_repository.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,26 +43,32 @@ public class UserController {
 //    }
 
     @GetMapping("/login")
-    public String getLoginPage(@RequestParam(required = false) String error, Model model){
-        if(error != null){
-            model.addAttribute("error", Errors.INVALID_CREDENTIALS);
-        }
-
+    public String getRegisterPage(@ModelAttribute("loginUser") LoginUser loginUser){
         return "login";
     }
 
-    @PostMapping("login")
-    public String loginUser(@ModelAttribute("loginUser") LoginUser loginUser, RedirectAttributes redirectAttributes, HttpSession httpSession) {
+//    @GetMapping("/login")
+//    public String getLoginPage(@RequestParam(required = false) String error, Model model){
+//        if(error != null){
+//            model.addAttribute("error", Errors.INVALID_CREDENTIALS);
+//        }
+//
+//        return "login";
+//    }
+
+    @PostMapping("/login")
+    public String loginUser(@Valid @ModelAttribute("loginUser") LoginUser loginUser, RedirectAttributes redirectAttributes, HttpSession httpSession) {
         LoggedUser loggedUser = this.userService.getByUsernameAndPassword(loginUser.getUsername(), loginUser.getPassword());
         if (loggedUser == null){
             List<String> errors = new ArrayList<>();
             errors.add("Wrong username or password");
-            redirectAttributes.addFlashAttribute("errors",errors);
-            return "redirect:/user/login";
+            redirectAttributes.addFlashAttribute("errors", errors);
+            return "redirect:/users/login";
         }
-        httpSession.setAttribute("user",loggedUser);
+        httpSession.setAttribute("user", loggedUser);
         return "redirect:/";
     }
+
 
 
     @PostMapping("/register")
@@ -78,7 +84,7 @@ public class UserController {
 
     @GetMapping("/users")
     public String getAllUsesPage(Model model){
-        List<UserModel> users = this.userService.getAll();
+        List<UserModelView> users = this.userService.getAll();
         model.addAttribute("users", users);
         model.addAttribute("view","all-users");
         return "base-layout";
