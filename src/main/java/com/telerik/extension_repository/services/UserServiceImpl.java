@@ -3,6 +3,8 @@ package com.telerik.extension_repository.services;
 import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.errors.Errors;
 import com.telerik.extension_repository.models.bindingModels.EditUserModel;
+import com.telerik.extension_repository.models.bindingModels.LoggedUser;
+import com.telerik.extension_repository.models.bindingModels.LoginUser;
 import com.telerik.extension_repository.models.bindingModels.RegisterUserModel;
 import com.telerik.extension_repository.models.viewModels.UserModel;
 import com.telerik.extension_repository.repositories.UserRepository;
@@ -13,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,16 +35,22 @@ public class UserServiceImpl implements UserService{
         User user = this.modelMapper.map(registrationModel, User.class);
         String encryptedPassword = this.bCryptPasswordEncoder.encode(registrationModel.getPassword());
         user.setPassword(encryptedPassword);
-//        user.setAccountNonExpired(true);
-//        user.setAccountNonLocked(true);
-//        user.setEnabled(true);
-//        user.setCredentialsNonExpired(true);
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setEnabled(true);
+        user.setCredentialsNonExpired(true);
         this.userRepository.save(user);
     }
 
     @Override
     public List<UserModel> getAll() {
-        return null;
+        List<User> users = this.userRepository.findAll();
+        List<UserModel> userModels = new ArrayList<>();
+        for (User user : users) {
+            UserModel userModel = this.modelMapper.map(user, UserModel.class);
+            userModels.add(userModel);
+        }
+        return userModels;
     }
 
     @Override
@@ -52,6 +61,29 @@ public class UserServiceImpl implements UserService{
     @Override
     public void edit(EditUserModel editUserModel) {
 
+    }
+
+    @Override
+    public LoggedUser getByUsernameAndPassword(String username, String password) {
+        User user = this.userRepository.findByUsernameAndPassword(username,password);
+        ModelMapper modelMapper = new ModelMapper();
+        LoggedUser loggedUser = null;
+        if (user != null) {
+            loggedUser = modelMapper.map(user,LoggedUser.class);
+        }
+
+        return loggedUser;
+    }
+
+    @Override
+    public LoginUser getByUsername(String username) {
+        User user = this.userRepository.findByUsername(username);
+        ModelMapper modelMapper = new ModelMapper();
+        LoginUser loginUser = null;
+        if (user != null){
+            loginUser = modelMapper.map(user, LoginUser.class);
+        }
+        return loginUser;
     }
 
     @Override
