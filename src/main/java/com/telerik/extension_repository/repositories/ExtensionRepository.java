@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ExtensionRepository extends JpaRepository<Extension,Integer> {
+public interface ExtensionRepository extends JpaRepository<Extension,Long> {
 
     Extension findByName(String name);
 
@@ -25,5 +25,7 @@ public interface ExtensionRepository extends JpaRepository<Extension,Integer> {
     List<Extension> findAll();
 
     List<Extension> getAllByNameOrderByNameAsc(String name);
+
+    Extension findFirstByName(String name);
 
 }

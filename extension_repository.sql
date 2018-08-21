@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `authorities` (
 /*!40000 ALTER TABLE `authorities` DISABLE KEYS */;
 /*!40000 ALTER TABLE `authorities` ENABLE KEYS */;
 
--- Dumping structure for table extension_repository.extensions
+-- Dumping structure for table extension_repository.extensions_old
 CREATE TABLE IF NOT EXISTS `extensions` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '0',
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `extensions` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table extension_repository.extensions: ~0 rows (approximately)
+-- Dumping data for table extension_repository.extensions_old: ~0 rows (approximately)
 /*!40000 ALTER TABLE `extensions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `extensions` ENABLE KEYS */;
 

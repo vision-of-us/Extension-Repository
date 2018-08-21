@@ -5,12 +5,12 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "extensions")
+@Table(name = "extensions_old")
 public class Extension {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private String name;
 
@@ -30,17 +30,29 @@ public class Extension {
 
     private Date last_commit_date;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @Lob
+    @Column(nullable = false, columnDefinition = "BLOB")
+    private byte[] file;
+
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User owner;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "customers_extensions",
-            joinColumns =  {@JoinColumn(name = "extension_id")} ,
-            inverseJoinColumns =  {@JoinColumn(name = "user_id")})
-    private Set<User>  customers;
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinTable(name = "customers_extensions",
+//            joinColumns =  {@JoinColumn(name = "extension_id")} ,
+//            inverseJoinColumns =  {@JoinColumn(name = "user_id")})
+//    private Set<User>  extensions;
 
-    public int getId() {
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "tags_extensions",
+            joinColumns =  {@JoinColumn(name = "extension_id")} ,
+            inverseJoinColumns =  {@JoinColumn(name = "tag_id")})
+    private Set<Tag>  tags;
+
+
+    public Long getId() {
         return id;
     }
 
@@ -124,11 +136,11 @@ public class Extension {
         this.owner = owner;
     }
 
-    public Set<User> getCustomers() {
-        return customers;
+    public byte[] getFile() {
+        return file;
     }
 
-    public void setCustomers(Set<User> customers) {
-        this.customers = customers;
+    public void setFile(byte[] file) {
+        this.file = file;
     }
 }

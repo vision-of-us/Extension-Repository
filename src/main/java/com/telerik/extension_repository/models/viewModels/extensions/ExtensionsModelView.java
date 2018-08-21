@@ -1,7 +1,7 @@
-package com.telerik.extension_repository.models.viewModels;
+package com.telerik.extension_repository.models.viewModels.extensions;
 
 public class ExtensionsModelView {
-    private Integer id;
+    private Long id;
 
     private String name;
 
@@ -9,11 +9,11 @@ public class ExtensionsModelView {
 
     private String number_of_downloads;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
