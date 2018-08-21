@@ -1,5 +1,5 @@
 <div class="container" xmlns:th="http://www.w3.org/1999/xhtml">
-    <a th:if="${session.user}" href="/extensions/add" class="btn btn-warning m-1"><strong>+</strong> Add Extension</a>
+    <a th:if="${session.loginUser}" href="/extensions/add" class="btn btn-warning m-1"><strong>+</strong> Add Extension</a>
     <div class="row" style="padding: 10px">
             <form>
                 <div class="input-group">

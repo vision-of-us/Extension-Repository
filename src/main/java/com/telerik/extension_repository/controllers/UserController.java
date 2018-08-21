@@ -65,7 +65,8 @@ public class UserController {
             redirectAttributes.addFlashAttribute("errors", errors);
             return "redirect:/users/login";
         }
-        httpSession.setAttribute("user", loggedUser);
+
+        httpSession.setAttribute("loginUser", loggedUser);
         return "redirect:/";
     }
 
