@@ -43,7 +43,7 @@ public class UserController {
 //    }
 
     @GetMapping("/login")
-    public String getRegisterPage(@ModelAttribute("loginUser") LoginUser loginUser){
+    public String getLoginPage(@ModelAttribute("loginUser") LoginUser loginUser){
         return "login";
     }
 
@@ -67,7 +67,7 @@ public class UserController {
         }
 
         httpSession.setAttribute("loginUser", loggedUser);
-        return "redirect:/";
+        return "redirect:/user";
     }
 
 
@@ -91,10 +91,15 @@ public class UserController {
         return "base-layout";
     }
 
+//    @GetMapping("/user")
+//    public String getUserPage(@ModelAttribute("loginUser") LoginUser loginUser, Model model){
+//        model.addAttribute("user", loginUser);
+//        model.addAttribute("view","user");
+//        return "user";
+//    }
+
     @GetMapping("/user")
-    public String getUserPage(Principal principal){
-        System.out.println(principal.getName());
-        //this.userService.delete();
+    public String getUserPage(){
         return "user";
     }
 
