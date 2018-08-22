@@ -10,9 +10,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
-    @GetMapping("/")
-    public String getLoginPage(Model model) {
-        return "home";
-    }
+//    @GetMapping("/")
+//    public String getLoginPage(Model model) {
+//        return "home";
+//    }
 
+    @GetMapping("/")
+    public String getHomePage(Model model){
+        model.addAttribute("view","home");
+        return "base-layout";
+    }
 }
