@@ -71,7 +71,6 @@ public class UserServiceImpl implements UserService{
         if (user != null) {
             loggedUser = modelMapper.map(user,LoggedUser.class);
         }
-
         return loggedUser;
     }
 
