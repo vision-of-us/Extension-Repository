@@ -34,32 +34,32 @@ public class UserControllerTest {
     @Test
     public void registerUserShouldPass() throws Exception {
         mockMvc
-                .perform(post("users/register")
-                        .param("username", "achoKucheto")
-                        .param("email", "angel.dobrev@abv.bg")
-                        .param("password", "123456")
-                        .param("confirmPassword", "123456")
+                .perform(post("localhost:8080/users/register")
+                        .param("username", "adobrev")
+                        .param("email", "angeldobrev@abv.bg")
+                        .param("password", "asd123456")
+                        .param("confirmPassword", "asd123456")
                 )
+
                 .andExpect(status().is3xxRedirection())
-//                .andExpect(status().is4xxClientError());
-                .andExpect(view().name("redirect:/login"))
-                .andExpect(redirectedUrl("/login"));
-//                .andExpect(model().hasNoErrors());
+                .andExpect(view().name("/users/login"))
+                .andExpect(redirectedUrl("/users/login"))
+                .andExpect(model().hasNoErrors());
 
         ArgumentCaptor<RegisterUserModel> captor = ArgumentCaptor.forClass(RegisterUserModel.class);
         verify(userService).register(captor.capture());
         RegisterUserModel registerUserModel = captor.getValue();
-        assertEquals("angel.dobrev@abv.bg", registerUserModel.getEmail());
-        assertEquals("achoKucheto", registerUserModel.getUsername());
+        assertEquals("angeldobrev@abv.bg", registerUserModel.getEmail());
+//        assertEquals("adobrev", registerUserModel.getUsername());
     }
 
     @Test(expected = Exception.class)
     public void registerUserWithDifferentPasswordsShouldThrow() throws Exception {
         mockMvc
-                .perform(post("/register")
-                        .param("email", "ivan@abv.bg")
-                        .param("password", "1234")
-                        .param("confirmPassword", "5678")
+                .perform(post("localhost:8080/users/register")
+                        .param("email", "purvan@abv.bg")
+                        .param("password", "123456")
+                        .param("confirmPassword", "qwerty")
                 )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/login"))
@@ -69,14 +69,14 @@ public class UserControllerTest {
         ArgumentCaptor<RegisterUserModel> captor = ArgumentCaptor.forClass(RegisterUserModel.class);
         verify(userService).register(captor.capture());
         RegisterUserModel registerUserModel = captor.getValue();
-        assertEquals("ivan@abv.bg", registerUserModel.getEmail());
+        assertEquals("purvan@abv.bg", registerUserModel.getEmail());
     }
 
     @Test(expected = Exception.class)
     public void registerUserWithShortPasswordsShouldThrow() throws Exception {
         mockMvc
-                .perform(post("/register")
-                        .param("email", "ivan@abv.bg")
+                .perform(post("localhost:8080/users/register")
+                        .param("email", "ivanoff@abv.bg")
                         .param("password", "1")
                         .param("confirmPassword", "1")
                 )
@@ -88,6 +88,6 @@ public class UserControllerTest {
         ArgumentCaptor<RegisterUserModel> captor = ArgumentCaptor.forClass(RegisterUserModel.class);
         verify(userService).register(captor.capture());
         RegisterUserModel registerUserModel = captor.getValue();
-        assertEquals("ivan@abv.bg", registerUserModel.getEmail());
+        assertEquals("ivanoff@abv.bg", registerUserModel.getEmail());
     }
 }
