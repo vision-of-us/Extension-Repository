@@ -1,10 +1,10 @@
 package com.telerik.extension_repository.controllers;
 
+import com.telerik.extension_repository.entities.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.telerik.extension_repository.models.bindingModels.RegisterUserModel;
 import com.telerik.extension_repository.services.UserService;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -33,24 +32,25 @@ public class UserControllerTest {
 
     @Test
     public void registerUserShouldPass() throws Exception {
+
         mockMvc
                 .perform(post("localhost:8080/users/register")
+//                        .header("host", "localhost:8080/users")
                         .param("username", "adobrev")
                         .param("email", "angeldobrev@abv.bg")
                         .param("password", "asd123456")
-                        .param("confirmPassword", "asd123456")
-                )
+                        .param("confirmPassword", "asd123456"))
 
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("/users/login"))
-                .andExpect(redirectedUrl("/users/login"))
+                .andExpect(view().name("redirect:/login"))
+                .andExpect(redirectedUrl("/login"))
                 .andExpect(model().hasNoErrors());
 
         ArgumentCaptor<RegisterUserModel> captor = ArgumentCaptor.forClass(RegisterUserModel.class);
         verify(userService).register(captor.capture());
         RegisterUserModel registerUserModel = captor.getValue();
         assertEquals("angeldobrev@abv.bg", registerUserModel.getEmail());
-//        assertEquals("adobrev", registerUserModel.getUsername());
+        assertEquals("adobrev", registerUserModel.getUsername());
     }
 
     @Test(expected = Exception.class)
