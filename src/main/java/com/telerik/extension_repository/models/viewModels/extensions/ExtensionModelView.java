@@ -7,7 +7,7 @@ public class ExtensionModelView {
 
     private String description;
 
-    private String link;
+    private String download_link;
 
     public Long getId() {
         return id;
@@ -33,11 +33,11 @@ public class ExtensionModelView {
         this.description = description;
     }
 
-    public String getLink() {
-        return link;
+    public String getDownload_link() {
+        return download_link;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setDownload_link(String download_link) {
+        this.download_link = download_link;
     }
 }

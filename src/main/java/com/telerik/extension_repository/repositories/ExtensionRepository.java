@@ -28,6 +28,8 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
             "ORDER BY e.name")
     List<Extension> findAll();
 
+    List<Extension> getAllByTags(String tag);
+
     List<Extension> getAllByNameOrderByNameAsc(String name);
 
     Extension findFirstByName(String name);

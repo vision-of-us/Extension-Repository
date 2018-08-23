@@ -109,7 +109,7 @@ public class ExtensionController {
 
     @GetMapping("{id}")
     public String getExtensionDetailsPage(Model model, @PathVariable Long id){
-        EditExtensionModel extensionDetailsView = this.extensionService.getByIdToEdit(id);
+        ExtensionDetailsView extensionDetailsView = this.extensionService.getByIdToDetailsPage(id);
         model.addAttribute("extension", extensionDetailsView);
         model.addAttribute("view","/extensions/extension-details");
         return "base-layout";
@@ -118,7 +118,7 @@ public class ExtensionController {
     @GetMapping("edit/{id}")
     public String getEditExtensionPage(Model model, @PathVariable Long id){
         EditExtensionModel extensionModel = this.extensionService.getByIdToEdit(id);
-        model.addAttribute("view","/extensions/extension-modifiable");
+        model.addAttribute("view","/extensions/extension-edit");
         model.addAttribute("type","Edit");
         model.addAttribute("extension", extensionModel);
         return "base-layout";
@@ -135,7 +135,7 @@ public class ExtensionController {
     @GetMapping("delete/{id}")
     public String getDeleteExtensionPage(Model model, @PathVariable Long id){
         EditExtensionModel extensionModel = this.extensionService.getByIdToEdit(id);
-        model.addAttribute("view","/extensions/extension-modifiable");
+        model.addAttribute("view","/extensions/extension-edit");
         model.addAttribute("type","Delete");
         model.addAttribute("extension", extensionModel);
         return "base-layout";

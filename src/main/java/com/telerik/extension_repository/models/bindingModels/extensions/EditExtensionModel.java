@@ -11,7 +11,7 @@ public class EditExtensionModel {
 
     private String description;
 
-    private String link;
+    private String download_link;
 
     private byte[] file;
 
@@ -41,14 +41,6 @@ public class EditExtensionModel {
         this.description = description;
     }
 
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
     public byte[] getFile() {
         return file;
     }
@@ -63,5 +55,13 @@ public class EditExtensionModel {
 
     public void setTags(Set<TagView> tags) {
         this.tags = tags;
+    }
+
+    public String getDownload_link() {
+        return download_link;
+    }
+
+    public void setDownload_link(String download_link) {
+        this.download_link = download_link;
     }
 }
