@@ -4,7 +4,7 @@ package com.telerik.extension_repository.services;
 import org.modelmapper.ModelMapper;
 
 import com.telerik.extension_repository.entities.Authority;
-import com.telerik.extension_repository.models.bindingModels.AuthorityModel;
+import com.telerik.extension_repository.models.bindingModels.user.AuthorityModel;
 import com.telerik.extension_repository.repositories.AuthorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -14,7 +14,7 @@ public class ExtensionDetailsView {
 
     private String number_of_downloads;
 
-    private Set<TagView> sales;
+    private Set<TagView> tags;
 
     public Long getId() {
         return id;
@@ -48,12 +48,12 @@ public class ExtensionDetailsView {
         this.number_of_downloads = number_of_downloads;
     }
 
-    public Set<TagView> getSales() {
-        return sales;
+    public Set<TagView> getTags() {
+        return tags;
     }
 
-    public void setSales(Set<TagView> sales) {
-        this.sales = sales;
+    public void setTags(Set<TagView> tags) {
+        this.tags = tags;
     }
 
 }

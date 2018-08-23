@@ -1,11 +1,10 @@
 package com.telerik.extension_repository.controllers;
 
 
-import com.telerik.extension_repository.errors.Errors;
-import com.telerik.extension_repository.models.bindingModels.LoggedUser;
-import com.telerik.extension_repository.models.bindingModels.LoginUser;
-import com.telerik.extension_repository.models.bindingModels.RegisterUserModel;
-import com.telerik.extension_repository.models.viewModels.UserModelView;
+import com.telerik.extension_repository.models.bindingModels.user.LoggedUser;
+import com.telerik.extension_repository.models.bindingModels.user.LoginUser;
+import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
+import com.telerik.extension_repository.models.viewModels.users.UserModelView;
 import com.telerik.extension_repository.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +80,7 @@ public class UserController {
 
         return "redirect:/users/login";
     }
+
 
     @GetMapping("/users")
     public String getAllUsesPage(Model model){

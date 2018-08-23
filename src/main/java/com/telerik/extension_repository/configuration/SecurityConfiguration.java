@@ -1,9 +1,11 @@
 package com.telerik.extension_repository.configuration;
 
+import com.telerik.extension_repository.services.StorageService;
 import com.telerik.extension_repository.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -32,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/users/register", "/login/**").permitAll()
+                .antMatchers("/", "/users/register", "/login/**", "/css/**", "/js/**").permitAll()
                 .antMatchers("/user/**").access("hasRole('ADMIN') OR hasRole('USER')")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -67,6 +69,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public ModelMapper getModelMapper(){
         return new ModelMapper();
+    }
+
+    @Bean
+    CommandLineRunner init(StorageService storageService) {
+        return (args) -> {
+            storageService.deleteAll();
+            storageService.init();
+        };
     }
 
 }

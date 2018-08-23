@@ -2,20 +2,20 @@ package com.telerik.extension_repository.services;
 
 
 import com.telerik.extension_repository.entities.Extension;
-import com.telerik.extension_repository.models.bindingModels.ExtensionModel;
 import com.telerik.extension_repository.models.bindingModels.extensions.AddExtensionModel;
 import com.telerik.extension_repository.models.bindingModels.extensions.EditExtensionModel;
-import com.telerik.extension_repository.models.bindingModels.extensions.RelatedExtensionModel;
 import com.telerik.extension_repository.models.viewModels.extensions.*;
 import com.telerik.extension_repository.repositories.ExtensionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class ExtensionServiceImpl implements ExtensionService {
     private final ExtensionRepository extensionRepository;
     private final ModelMapper modelMapper;
@@ -33,70 +33,55 @@ public class ExtensionServiceImpl implements ExtensionService {
 //
 //    }
 //
+    @Override
+    public List<ExtensionModelView> getAll() {
+        List<Extension> extensions = this.extensionRepository.findAll();
+        List<ExtensionModelView> extensionModelViews = new ArrayList<>();
+        for (Extension extension : extensions) {
+            ExtensionModelView extensionModelView = this.modelMapper.map(extension, ExtensionModelView.class);
+            extensionModelViews.add(extensionModelView);
+        }
+        return extensionModelViews;
+    }
+
+
 //    @Override
-//    public List<ExtensionsModelView> getAll() {
-//        List<Extension> extensions = this.extensionRepository.findAll();
-//        List<ExtensionsModelView> extensionsModelViews = new ArrayList<>();
-//        for (Extension extension : extensions) {
-//            ExtensionsModelView extensionsModelView = this.modelMapper.map(extension, ExtensionsModelView.class);
+//    public Set<ExtensionModelView> getAllByName(String name) {
+//        List<Extension> extensions_old = this.extensionRepository.getAllByNameOrderByNameAsc(name);
+//        Set<ExtensionModelView> extensionsModelViews = new HashSet<>();
+//        for (Extension extension : extensions_old) {
+//            ExtensionModelView extensionsModelView = this.modelMapper.map(extension, ExtensionModelView.class);
 //            extensionsModelViews.add(extensionsModelView);
 //        }
 //        return extensionsModelViews;
 //    }
-//
-//
-////    @Override
-////    public Set<ExtensionsModelView> getAllByName(String name) {
-////        List<Extension> extensions_old = this.extensionRepository.getAllByNameOrderByNameAsc(name);
-////        Set<ExtensionsModelView> extensionsModelViews = new HashSet<>();
-////        for (Extension extension : extensions_old) {
-////            ExtensionsModelView extensionsModelView = this.modelMapper.map(extension, ExtensionsModelView.class);
-////            extensionsModelViews.add(extensionsModelView);
-////        }
-////        return extensionsModelViews;
-////    }
-//
-//    @Override
-//    public List<ExtensionsModelView> getAllByName(String name) {
-//        List<Extension> extensions = new ArrayList<>();
-//        if (name != null) {
-//            extensions = this.extensionRepository.getAllByNameOrderByNameAsc(name);
-//        } else {
-//            extensions = this.extensionRepository.findAll();
-//        }
-//
-//        List<ExtensionsModelView> extensionsModelViews = new ArrayList<>();
-//        ModelMapper modelMapper = new ModelMapper();
-//        for (Extension extension : extensions) {
-//            ExtensionsModelView extensionsModelView = modelMapper.map(extension, ExtensionsModelView.class);
-//            extensionsModelViews.add(extensionsModelView);
-//        }
-//        return extensionsModelViews;
-//    }
-
-
-    // ---------------------------------- From CustomerServiceImpl
-
 
     @Override
-    public List<ExtensionsModelView> getAllByName(String name) {
-        return null;
+    public List<ExtensionModelView> getAllByName(String name) {
+        List<Extension> extensions = new ArrayList<>();
+        if (name != null) {
+            extensions = this.extensionRepository.getAllByNameOrderByNameAsc(name);
+        } else {
+            extensions = this.extensionRepository.findAll();
+        }
+
+        List<ExtensionModelView> extensionModelViews = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+        for (Extension extension : extensions) {
+            ExtensionModelView extensionModelView = modelMapper.map(extension, ExtensionModelView.class);
+            extensionModelViews.add(extensionModelView);
+        }
+        return extensionModelViews;
     }
+
 
     @Override
     public void persist(AddExtensionModel addExtensionModel) {
-
+        ModelMapper modelMapper = new ModelMapper();
+        Extension extension = modelMapper.map(addExtensionModel, Extension.class);
+        this.extensionRepository.saveAndFlush(extension);
     }
 
-    @Override
-    public List<ExtensionView> getAllOrderByBirthDate(String type) {
-        return null;
-    }
-
-    @Override
-    public ExtensionDetailsView getById(Long id) {
-        return null;
-    }
 
     @Override
     public EditExtensionModel getByIdToEdit(Long id) {
@@ -112,25 +97,22 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     }
 
+//    @Override
+//    public void update(EditExtensionModel extensionModel) {
+//        ModelMapper modelMapper = new ModelMapper();
+//        Extension extension = modelMapper.map(extensionModel, Extension.class);
+//        this.extensionRepository.saveAndFlush(extension);
+//    }
+
     @Override
     public void update(EditExtensionModel extensionModel) {
-        ModelMapper modelMapper = new ModelMapper();
-        Extension extension = modelMapper.map(extensionModel, Extension.class);
-        this.extensionRepository.saveAndFlush(extension);
+        this.extensionRepository.update(extensionModel.getName(), extensionModel.getDescription(), extensionModel.getId());
     }
 
     @Override
-    public List<ExtensionNameView> getAll() {
-        return null;
+    public void delete(EditExtensionModel editExtensionModel) {
+        this.extensionRepository.deleteById(editExtensionModel.getId());
     }
 
-    @Override
-    public RelatedExtensionModel getByName(String name) {
-        return null;
-    }
 
-    @Override
-    public ExtensionDriverView getDriverById(Long id) {
-        return null;
-    }
 }

@@ -1,13 +1,13 @@
 package com.telerik.extension_repository.models.viewModels.extensions;
 
-public class ExtensionsModelView {
+public class ExtensionModelView {
     private Long id;
 
     private String name;
 
     private String description;
 
-    private String number_of_downloads;
+    private String link;
 
     public Long getId() {
         return id;
@@ -33,11 +33,11 @@ public class ExtensionsModelView {
         this.description = description;
     }
 
-    public String getNumber_of_downloads() {
-        return number_of_downloads;
+    public String getLink() {
+        return link;
     }
 
-    public void setNumber_of_downloads(String number_of_downloads) {
-        this.number_of_downloads = number_of_downloads;
+    public void setLink(String link) {
+        this.link = link;
     }
 }
