@@ -1,5 +1,6 @@
 package com.telerik.extension_repository.controllers;
 
+import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import com.telerik.extension_repository.models.bindingModels.RegisterUserModel;
 import com.telerik.extension_repository.services.UserService;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
