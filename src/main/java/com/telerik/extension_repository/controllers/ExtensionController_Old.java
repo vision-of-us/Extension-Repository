@@ -1,6 +1,6 @@
 //package com.telerik.extension_repository.controllers;
 //
-//import com.telerik.extension_repository.models.viewModels.extensions.ExtensionsModelView;
+//import com.telerik.extension_repository.models.viewModels.extensions.ExtensionModelView;
 //import com.telerik.extension_repository.services.ExtensionService;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@
 //
 //    @GetMapping("all")
 //    public String getExtensionsTablePage(Model model, @RequestParam(value = "name", required = false) String name) {
-//        List<ExtensionsModelView> extensionsModelViews = this.extensionService.getAllByName(name);
+//        List<ExtensionModelView> extensionsModelViews = this.extensionService.getAllByName(name);
 //        model.addAttribute("extensions", extensionsModelViews);
 //        model.addAttribute("view", "/extensions_old/extensions_old-table");
 //        return "base-layout";

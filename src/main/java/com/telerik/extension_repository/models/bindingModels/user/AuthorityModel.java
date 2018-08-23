@@ -1,4 +1,4 @@
-package com.telerik.extension_repository.models.bindingModels;
+package com.telerik.extension_repository.models.bindingModels.user;
 
 public class AuthorityModel {
     private Integer id;

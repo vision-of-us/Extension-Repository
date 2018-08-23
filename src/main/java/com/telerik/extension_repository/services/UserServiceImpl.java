@@ -1,12 +1,14 @@
 package com.telerik.extension_repository.services;
 
+import com.telerik.extension_repository.entities.Authority;
 import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.errors.Errors;
-import com.telerik.extension_repository.models.bindingModels.EditUserModel;
-import com.telerik.extension_repository.models.bindingModels.LoggedUser;
-import com.telerik.extension_repository.models.bindingModels.LoginUser;
-import com.telerik.extension_repository.models.bindingModels.RegisterUserModel;
-import com.telerik.extension_repository.models.viewModels.UserModelView;
+import com.telerik.extension_repository.models.bindingModels.user.EditUserModel;
+import com.telerik.extension_repository.models.bindingModels.user.LoggedUser;
+import com.telerik.extension_repository.models.bindingModels.user.LoginUser;
+import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
+import com.telerik.extension_repository.models.viewModels.users.UserModelView;
+import com.telerik.extension_repository.repositories.AuthorityRepository;
 import com.telerik.extension_repository.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +17,26 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService{
 
-    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
+    private AuthorityRepository roleRepository;
+
     private ModelMapper modelMapper;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, AuthorityRepository roleRepository, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.modelMapper = modelMapper;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @Override
     public void register(RegisterUserModel registrationModel) {
@@ -76,7 +84,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public LoginUser getByUsername(String username) {
-        User user = this.userRepository.findByUsername(username);
+        Optional<User> user = this.userRepository.findByUsername(username);
         ModelMapper modelMapper = new ModelMapper();
         LoginUser loginUser = null;
         if (user != null){
@@ -98,5 +106,25 @@ public class UserServiceImpl implements UserService{
         }
 
         return user;
+    }
+
+    private Set<Authority> getAuthorities(String authority) {
+        Set<Authority> userAuthorities = new HashSet<>();
+
+        userAuthorities.add(this.roleRepository.getByAuthority(authority));
+
+        return userAuthorities;
+    }
+
+    private String getUserAuthority(String userId) {
+        return this
+                .userRepository
+                .findById(userId)
+                .get()
+                .getAuthorities()
+                .stream()
+                .findFirst()
+                .get()
+                .getAuthority();
     }
 }

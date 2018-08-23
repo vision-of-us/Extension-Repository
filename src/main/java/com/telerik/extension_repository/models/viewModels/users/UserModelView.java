@@ -1,4 +1,4 @@
-package com.telerik.extension_repository.models.viewModels;
+package com.telerik.extension_repository.models.viewModels.users;
 
 public class UserModelView {
     private Long id;

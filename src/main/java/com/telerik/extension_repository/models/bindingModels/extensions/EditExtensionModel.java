@@ -5,7 +5,7 @@ import com.telerik.extension_repository.models.viewModels.tags.TagView;
 import java.util.Set;
 
 public class EditExtensionModel {
-    private Integer id;
+    private Long id;
 
     private String name;
 
@@ -17,11 +17,11 @@ public class EditExtensionModel {
 
     private Set<TagView> tags;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

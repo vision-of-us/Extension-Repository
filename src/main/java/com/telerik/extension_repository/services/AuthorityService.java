@@ -1,6 +1,6 @@
 package com.telerik.extension_repository.services;
 
-import com.telerik.extension_repository.models.bindingModels.AuthorityModel;
+import com.telerik.extension_repository.models.bindingModels.user.AuthorityModel;
 
 import java.util.List;
 import java.util.Set;
