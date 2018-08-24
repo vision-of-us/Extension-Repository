@@ -3,6 +3,7 @@ package com.telerik.extension_repository.repositories;
 
 import com.telerik.extension_repository.entities.Extension;
 import com.telerik.extension_repository.entities.User;
+import com.telerik.extension_repository.entities.enums.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -27,6 +28,13 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
             "SELECT e FROM Extension AS e " +
             "ORDER BY e.name")
     List<Extension> findAll();
+
+
+       @Query(value =
+            "SELECT e FROM Extension AS e " +
+                    "WHERE e.status = :pending")
+    List<Extension> findAllByStatus(@Param("pending") Status pending);
+
 
     List<Extension> getAllByTags(String tag);
 

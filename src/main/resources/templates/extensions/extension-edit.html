@@ -2,27 +2,27 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="text-center"><h1 class="display-3">Edit part</h1></div>
+                <div class="text-center"><h1 class="display-3">Edit Extension</h1></div>
                 <br/>
-                <form th:method="post" th:object="${part}">
+                <form th:method="post" th:object="${extension}">
                     <div class="form-group row">
                         <label class="form-control-label">Name</label>
                         <input type="text" class="form-control" th:field="*{name}" readonly/>
                     </div>
                     <div class="form-group row">
                         <label class="form-control-label">Price</label>
-                        <input type="number" step="0.01" min="0"  class="form-control" th:field="*{price}" required/>
+                        <input type="number" step="0.01" min="0"  class="form-control" th:field="*{description}" required/>
                     </div>
                     <div class="form-group row">
-                        <label class="form-control-label">Quantity</label>
-                        <input type="number" class="form-control" th:field="*{quantity}"/>
+                        <label class="form-control-label">Download link</label>
+                        <input type="number" class="form-control" th:field="*{download_link}"/>
                     </div>
-                    <div class="form-group row">
-                        <label class="form-control-label">Supplier</label>
-                        <select class="form-control" name="supplierName" readonly>
-                            <option selected="selected" th:text="*{supplier.name}" ></option>
-                        </select>
-                    </div>
+                    <!--<div class="form-group row">-->
+                        <!--<label class="form-control-label">Tags</label>-->
+                        <!--<select class="form-control" name="tagName" readonly>-->
+                            <!--<option selected="selected" th:text="*{tag.name}" ></option>-->
+                        <!--</select>-->
+                    <!--</div>-->
                     <input type="submit" class="btn btn-outline-warning btn-lg btn-block"
                            th:value="Edit"/>
 

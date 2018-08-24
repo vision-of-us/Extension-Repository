@@ -30,8 +30,15 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_authorities",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "authority_id"))
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Authority> authorities;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Extension> extensions;
+
+    public User() {
+        this.extensions = new HashSet<>(0);
+    }
 
     public long getId() {
         return id;
@@ -106,5 +113,9 @@ public class User implements UserDetails {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public void addRole(Authority role) {
+        this.authorities.add(role);
     }
 }

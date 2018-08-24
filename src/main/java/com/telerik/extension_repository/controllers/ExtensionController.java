@@ -5,6 +5,7 @@ import com.telerik.extension_repository.models.bindingModels.extensions.AddExten
 import com.telerik.extension_repository.models.bindingModels.extensions.EditExtensionModel;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionDetailsView;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionModelView;
+import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 import com.telerik.extension_repository.services.ExtensionService;
 import com.telerik.extension_repository.services.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,7 +101,7 @@ public class ExtensionController {
 //    }
 
     @GetMapping("all")
-    public String getAllPartsPage(Model model){
+    public String getAllExtensionPage(Model model){
         List<ExtensionModelView> extensionViews = this.extensionService.getAll();
         model.addAttribute("extensions", extensionViews);
         model.addAttribute("view","/extensions/extensions-table");
@@ -125,7 +126,7 @@ public class ExtensionController {
     }
 
     @PostMapping("edit/{id}")
-    public String editExtension(@ModelAttribute EditExtensionModel extensionModel, @PathVariable Long id){
+    public String editExtension(@ModelAttribute ExtensionStatusView extensionModel, @PathVariable Long id){
         extensionModel.setId(id);
         this.extensionService.update(extensionModel);
         return "redirect:/extensions/all";
@@ -142,7 +143,7 @@ public class ExtensionController {
     }
 
     @PostMapping("delete/{id}")
-    public String deletePart(@ModelAttribute EditExtensionModel extensionModel, @PathVariable Long id){
+    public String deletePart(@ModelAttribute ExtensionStatusView extensionModel, @PathVariable Long id){
         extensionModel.setId(id);
         this.extensionService.delete(extensionModel);
         return "redirect:/extensions/all";

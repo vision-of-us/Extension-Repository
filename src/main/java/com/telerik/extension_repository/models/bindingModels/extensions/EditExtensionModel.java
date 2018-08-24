@@ -1,5 +1,6 @@
 package com.telerik.extension_repository.models.bindingModels.extensions;
 
+import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.viewModels.tags.TagView;
 
 import java.util.Set;
@@ -16,6 +17,8 @@ public class EditExtensionModel {
     private byte[] file;
 
     private Set<TagView> tags;
+
+    private Status status;
 
     public Long getId() {
         return id;
@@ -63,5 +66,13 @@ public class EditExtensionModel {
 
     public void setDownload_link(String download_link) {
         this.download_link = download_link;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

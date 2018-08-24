@@ -2,17 +2,23 @@ package com.telerik.extension_repository.services;
 
 
 import com.telerik.extension_repository.entities.Extension;
+import com.telerik.extension_repository.entities.User;
+import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.bindingModels.extensions.AddExtensionModel;
 import com.telerik.extension_repository.models.bindingModels.extensions.EditExtensionModel;
+import com.telerik.extension_repository.models.bindingModels.extensions.RelatedExtensionModel;
 import com.telerik.extension_repository.models.viewModels.extensions.*;
 import com.telerik.extension_repository.repositories.ExtensionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,6 +39,18 @@ public class ExtensionServiceImpl implements ExtensionService {
 //
 //    }
 //
+@Override
+public List<ExtensionModelView> getAllPending() {
+    List<Extension> extensions = this.extensionRepository.findAllByStatus(Status.PENDING);
+    List<ExtensionModelView> extensionModelViews = new ArrayList<>();
+    for (Extension extension : extensions) {
+        ExtensionModelView extensionModelView = this.modelMapper.map(extension, ExtensionModelView.class);
+        extensionModelViews.add(extensionModelView);
+    }
+    return extensionModelViews;
+}
+
+
     @Override
     public List<ExtensionModelView> getAll() {
         List<Extension> extensions = this.extensionRepository.findAll();
@@ -89,12 +107,19 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public void persist(AddExtensionModel addExtensionModel) {
+        addExtensionModel.setStatus(Status.PENDING);
         ModelMapper modelMapper = new ModelMapper();
         Extension extension = modelMapper.map(addExtensionModel, Extension.class);
         this.extensionRepository.saveAndFlush(extension);
     }
 
-
+    @Override
+    public void approve(AddExtensionModel addExtensionModel) {
+        addExtensionModel.setStatus(Status.APPROVED);
+        ModelMapper modelMapper = new ModelMapper();
+        Extension extension = modelMapper.map(addExtensionModel, Extension.class);
+        this.extensionRepository.saveAndFlush(extension);
+    }
     @Override
     public EditExtensionModel getByIdToEdit(Long id) {
         Extension extension = this.extensionRepository.getOne(id);
@@ -109,6 +134,13 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     }
 
+    @Override
+    public ExtensionStatusView getById(Long id) {
+        Optional<Extension> extension = this.extensionRepository.findById(id);
+        ExtensionStatusView extensionStatusView = modelMapper.map(extension, ExtensionStatusView.class);
+        return extensionStatusView;
+    }
+
 //    @Override
 //    public void update(EditExtensionModel extensionModel) {
 //        ModelMapper modelMapper = new ModelMapper();
@@ -117,14 +149,13 @@ public class ExtensionServiceImpl implements ExtensionService {
 //    }
 
     @Override
-    public void update(EditExtensionModel extensionModel) {
+    public void update(ExtensionStatusView extensionModel) {
         this.extensionRepository.update(extensionModel.getName(), extensionModel.getDescription(), extensionModel.getId());
     }
 
     @Override
-    public void delete(EditExtensionModel editExtensionModel) {
+    public void delete(ExtensionStatusView editExtensionModel) {
         this.extensionRepository.deleteById(editExtensionModel.getId());
     }
-
 
 }

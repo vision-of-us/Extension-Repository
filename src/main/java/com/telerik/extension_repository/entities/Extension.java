@@ -1,5 +1,7 @@
 package com.telerik.extension_repository.entities;
 
+import com.telerik.extension_repository.entities.enums.Status;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -30,12 +32,15 @@ public class Extension {
 
     private Date last_commit_date;
 
+    @Enumerated(value = EnumType.STRING)
+    private Status status;
+
     @Lob
     @Column(nullable = false, columnDefinition = "BLOB")
     private byte[] file;
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="user_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User owner;
 
 //    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -50,7 +55,6 @@ public class Extension {
             joinColumns =  {@JoinColumn(name = "extension_id")} ,
             inverseJoinColumns =  {@JoinColumn(name = "tag_id")})
     private Set<Tag>  tags;
-
 
     public Long getId() {
         return id;
@@ -142,5 +146,13 @@ public class Extension {
 
     public void setFile(byte[] file) {
         this.file = file;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
