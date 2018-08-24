@@ -18,9 +18,9 @@
         <tr th:each="extension : ${extensions}">
             <th scope="row" th:text="${extension.name}"></th>
             <td th:text="${extension.description}"></td>
-            <td th:text="${extension.link}"></td>
+            <td th:text="${extension.download_link}"></td>
             <td>
-                <a th:href="@{/extensions/{id}(id=${extension.id})}">Details</a>
+                <a th:href="@{/extensions/{id}(id = ${extension.id})}">Details</a>
             </td>
             <td>
                 <a th:href="@{/extensions/edit/{id}(id=${extension.id})}">Edit</a>

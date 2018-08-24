@@ -44,6 +44,18 @@ public class ExtensionServiceImpl implements ExtensionService {
         return extensionModelViews;
     }
 
+    @Override
+    public ExtensionDetailsView getByIdToDetailsPage(Long id) {
+        Extension extension = this.extensionRepository.getOne(id);
+        ModelMapper modelMapper = new ModelMapper();
+        ExtensionDetailsView extensionModel = null;
+        if (extension != null) {
+            extensionModel = modelMapper.map(extension, ExtensionDetailsView.class);
+
+        }
+        return extensionModel;
+    }
+
 
 //    @Override
 //    public Set<ExtensionModelView> getAllByName(String name) {

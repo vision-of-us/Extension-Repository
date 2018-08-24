@@ -13,6 +13,7 @@ public interface ExtensionService {
     EditExtensionModel getByIdToEdit(Long id);
     void update(EditExtensionModel extensionModel);
     List<ExtensionModelView> getAll();
+    ExtensionDetailsView getByIdToDetailsPage(Long id);
     List<ExtensionModelView> getAllByName(String name);
     void delete(EditExtensionModel id);
 }
