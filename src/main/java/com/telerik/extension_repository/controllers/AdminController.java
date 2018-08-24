@@ -1,28 +1,15 @@
 package com.telerik.extension_repository.controllers;
 
 
-import com.telerik.extension_repository.models.bindingModels.extensions.AddExtensionModel;
-import com.telerik.extension_repository.models.bindingModels.user.LoggedUser;
-import com.telerik.extension_repository.models.bindingModels.user.LoginUser;
-import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionModelView;
-import com.telerik.extension_repository.models.viewModels.users.UserModelView;
+import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 import com.telerik.extension_repository.services.AdminService;
 import com.telerik.extension_repository.services.ExtensionService;
-import com.telerik.extension_repository.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -36,10 +23,9 @@ public class AdminController {
     private ExtensionService extensionService;
 
 
-    @GetMapping()
+    @GetMapping("extensions")
     public String getAdminPage(Model model){
         List<ExtensionModelView> extensionViews = this.extensionService.getAll();
-
         model.addAttribute("extensions", extensionViews);
         model.addAttribute("view","/extensions/extensions-table");
         return "base-layout";
@@ -49,7 +35,47 @@ public class AdminController {
     public String getPendingExtensions(Model model){
         List<ExtensionModelView> extensionViews = this.extensionService.getAllPending();
         model.addAttribute("extensions", extensionViews);
-        model.addAttribute("view","/extensions/extensions-table");
+        model.addAttribute("view","/admin/admin-pending-extensions");
+        return "base-layout";
+    }
+    @GetMapping("pending/edit/{id}")
+    public String getEditPage(Model model, @PathVariable Long id){
+        ExtensionStatusView extensionStatusView = this.extensionService.getById(id);
+        model.addAttribute("type","Edit");
+        model.addAttribute("view","/admin/admin-extensions-modifiable");
+        model.addAttribute("extension",extensionStatusView);
+        return "base-layout";
+    }
+
+    @PostMapping("pending/edit/{id}")
+    public String editExtension(@ModelAttribute ExtensionStatusView extensionStatusView,@PathVariable Long id){
+        extensionStatusView.setId(id);
+        this.extensionService.update(extensionStatusView);
+        return "redirect:/admin/pending";
+    }
+
+    @GetMapping("pending/approve/{id}")
+    public String getApproveExtensionPage(Model model,@PathVariable Long id){
+        ExtensionStatusView extensionStatusView = this.extensionService.getById(id);
+        model.addAttribute("type","Approve");
+        model.addAttribute("view","/admin/admin-extensions-modifiable");
+        model.addAttribute("extension", extensionStatusView);
+        return "base-layout";
+    }
+
+    @PostMapping("pending/delete/{id}")
+    public String deleteExtension(@ModelAttribute ExtensionStatusView editPartModel, @PathVariable Long id){
+        editPartModel.setId(id);
+        this.extensionService.delete(editPartModel);
+        return "redirect:/admin/pending";
+    }
+
+    @GetMapping("pending/delete/{id}")
+    public String getDeletePartPage(Model model, @PathVariable Long id){
+        ExtensionStatusView extensionStatusView = this.extensionService.getById(id);
+        model.addAttribute("type","Delete");
+        model.addAttribute("view","/admin/admin-extensions-modifiable");
+        model.addAttribute("extension",extensionStatusView);
         return "base-layout";
     }
 

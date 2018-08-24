@@ -1,0 +1,27 @@
+<div class="container">
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="extension : ${extensions}">
+        <th scope="row" th:text="${extension.name}"></th>
+        <td th:text="${extension.description}"></td>
+        <td>
+            <a th:href="@{/admin/pending/approve/{id}(id=${extension.id})}">Approve</a>
+        </td>
+        <td>
+            <a th:href="@{/admin/pending/delete/{id}(id=${extension.id})}">Delete</a>
+        </td>
+        <td>
+            admin/pending/edit/2
+            <a th:href="@{/admin/pending/edit/{id}(id=${extension.id})}">Edit</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>

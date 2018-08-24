@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -133,6 +134,13 @@ public List<ExtensionModelView> getAllPending() {
 
     }
 
+    @Override
+    public ExtensionStatusView getById(Long id) {
+        Optional<Extension> extension = this.extensionRepository.findById(id);
+        ExtensionStatusView extensionStatusView = modelMapper.map(extension, ExtensionStatusView.class);
+        return extensionStatusView;
+    }
+
 //    @Override
 //    public void update(EditExtensionModel extensionModel) {
 //        ModelMapper modelMapper = new ModelMapper();
@@ -141,12 +149,12 @@ public List<ExtensionModelView> getAllPending() {
 //    }
 
     @Override
-    public void update(EditExtensionModel extensionModel) {
+    public void update(ExtensionStatusView extensionModel) {
         this.extensionRepository.update(extensionModel.getName(), extensionModel.getDescription(), extensionModel.getId());
     }
 
     @Override
-    public void delete(EditExtensionModel editExtensionModel) {
+    public void delete(ExtensionStatusView editExtensionModel) {
         this.extensionRepository.deleteById(editExtensionModel.getId());
     }
 

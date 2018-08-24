@@ -8,6 +8,7 @@ import com.telerik.extension_repository.models.bindingModels.user.AuthorityModel
 import com.telerik.extension_repository.repositories.AuthorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@Transactional
 public class AuthorityServiceImpl implements AuthorityService {
     private final AuthorityRepository roleRepository;
     private final ModelMapper modelMapper;

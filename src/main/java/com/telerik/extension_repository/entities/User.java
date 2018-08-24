@@ -34,10 +34,10 @@ public class User implements UserDetails {
     private Set<Authority> authorities;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Extension> userExtensions;
+    private Set<Extension> extensions;
 
     public User() {
-        this.userExtensions = new HashSet<>(0);
+        this.extensions = new HashSet<>(0);
     }
 
     public long getId() {
