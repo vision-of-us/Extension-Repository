@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -43,12 +44,12 @@ public class AdminController {
         ExtensionStatusView extensionStatusView = this.extensionService.getById(id);
         model.addAttribute("type","Edit");
         model.addAttribute("view","/admin/admin-extensions-modifiable");
-        model.addAttribute("extension",extensionStatusView);
+        model.addAttribute("extension", extensionStatusView);
         return "base-layout";
     }
 
     @PostMapping("pending/edit/{id}")
-    public String editExtension(@ModelAttribute ExtensionStatusView extensionStatusView,@PathVariable Long id){
+    public String editExtension(@Valid @ModelAttribute("extensionStatusView") ExtensionStatusView extensionStatusView, @PathVariable Long id){
         extensionStatusView.setId(id);
         this.extensionService.update(extensionStatusView);
         return "redirect:/admin/pending";
