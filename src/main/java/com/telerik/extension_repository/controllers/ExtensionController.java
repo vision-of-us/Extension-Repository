@@ -100,7 +100,7 @@ public class ExtensionController {
 //    }
 
     @GetMapping("all")
-    public String getAllPartsPage(Model model){
+    public String getAllExtensionPage(Model model){
         List<ExtensionModelView> extensionViews = this.extensionService.getAll();
         model.addAttribute("extensions", extensionViews);
         model.addAttribute("view","/extensions/extensions-table");

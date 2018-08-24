@@ -1,7 +1,9 @@
 package com.telerik.extension_repository.services;
 
+import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.bindingModels.extensions.AddExtensionModel;
 import com.telerik.extension_repository.models.bindingModels.extensions.EditExtensionModel;
+import com.telerik.extension_repository.models.bindingModels.extensions.RelatedExtensionModel;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionModelView;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionDetailsView;
 
@@ -12,8 +14,11 @@ public interface ExtensionService {
     void persist(AddExtensionModel addExtensionModel);
     EditExtensionModel getByIdToEdit(Long id);
     void update(EditExtensionModel extensionModel);
+    void approve(AddExtensionModel addExtensionModel);
     List<ExtensionModelView> getAll();
     ExtensionDetailsView getByIdToDetailsPage(Long id);
     List<ExtensionModelView> getAllByName(String name);
     void delete(EditExtensionModel id);
+    List<ExtensionModelView> getAllPending();
+
 }

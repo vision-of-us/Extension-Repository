@@ -3,10 +3,7 @@ package com.telerik.extension_repository.services;
 import com.telerik.extension_repository.entities.Authority;
 import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.errors.Errors;
-import com.telerik.extension_repository.models.bindingModels.user.EditUserModel;
-import com.telerik.extension_repository.models.bindingModels.user.LoggedUser;
-import com.telerik.extension_repository.models.bindingModels.user.LoginUser;
-import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
+import com.telerik.extension_repository.models.bindingModels.user.*;
 import com.telerik.extension_repository.models.viewModels.users.UserModelView;
 import com.telerik.extension_repository.repositories.AuthorityRepository;
 import com.telerik.extension_repository.repositories.UserRepository;
@@ -26,14 +23,16 @@ public class UserServiceImpl implements UserService{
 
     private UserRepository userRepository;
 
-    private AuthorityRepository roleRepository;
+    private AuthorityRepository authorityRepository;
+
+    private AuthorityService roleService;
 
     private ModelMapper modelMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, AuthorityRepository roleRepository, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+        this.authorityRepository = authorityRepository;
         this.modelMapper = modelMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -47,6 +46,14 @@ public class UserServiceImpl implements UserService{
         user.setAccountNonLocked(true);
         user.setEnabled(true);
         user.setCredentialsNonExpired(true);
+        if(this.userRepository.findAll().isEmpty()) {
+            user.setAuthorities(this.getAuthorities("ROLE_ADMIN"));
+        } else {
+            user.setAuthorities(this.getAuthorities("ROLE_USER"));
+        }
+//        AuthorityModel userRole = this.roleService.findByName("ROLE_USER");
+//        Authority role = this.modelMapper.map(userRole, Authority.class);
+//        user.addRole(role);
         this.userRepository.save(user);
     }
 
@@ -111,10 +118,11 @@ public class UserServiceImpl implements UserService{
     private Set<Authority> getAuthorities(String authority) {
         Set<Authority> userAuthorities = new HashSet<>();
 
-        userAuthorities.add(this.roleRepository.getByAuthority(authority));
+        userAuthorities.add(this.authorityRepository.getByAuthority(authority));
 
         return userAuthorities;
     }
+
 
     private String getUserAuthority(String userId) {
         return this

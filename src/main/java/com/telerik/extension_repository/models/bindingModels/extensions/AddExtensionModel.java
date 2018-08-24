@@ -1,5 +1,6 @@
 package com.telerik.extension_repository.models.bindingModels.extensions;
 
+import com.telerik.extension_repository.entities.enums.Status;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -10,6 +11,8 @@ public class AddExtensionModel {
     private String description;
 
     private String download_link;
+
+    private Status status;
 
     private byte[] file;
 
@@ -44,5 +47,13 @@ public class AddExtensionModel {
 
     public void setDownload_link(String download_link) {
         this.download_link = download_link;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

@@ -26,6 +26,12 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
     @Override
+    public AuthorityModel findByName(String name) {
+        Authority role =  roleRepository.getByAuthority(name);
+        return this.modelMapper.map(role, AuthorityModel.class);
+    }
+
+    @Override
     public List<AuthorityModel> getAll() {
         List<Authority> roles = this.roleRepository.findAll();
         List<AuthorityModel> roleModels = new ArrayList<>();
@@ -38,7 +44,7 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public Set<AuthorityModel> getAllByName(String[] names) {
-        Set<Authority> roles = this.roleRepository.findAllByAuthorityIn(names);
+        Set<Authority> roles = (Set<Authority>) this.roleRepository.findAll();
         Set<AuthorityModel> roleModels = new HashSet<>();
         for (Authority role : roles) {
             AuthorityModel roleModel = this.modelMapper.map(role, AuthorityModel.class);
