@@ -16,6 +16,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -34,12 +37,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/users/register", "/login/**", "/bootstrap/**", "/jquery/**", "http://code.jquery.com/jquery-1.8.3.min.js").permitAll()
+                .antMatchers("/", "/register", "/login/**", "/bootstrap/**", "/jquery/**").permitAll()
                 .antMatchers("/user/**").access("hasRole('ADMIN') OR hasRole('USER')")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/users/login").permitAll(/*true*/)
+                .formLogin().loginPage("/login").permitAll(/*true*/)
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and()
@@ -49,11 +52,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .key("randomKey")
                 .tokenValiditySeconds(1000)
                 .and()
-                .logout().logoutSuccessUrl("/login?logout").permitAll()
+                .logout().logoutSuccessUrl("/login?logout").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/unauthorized")
                 .and()
-                .csrf().disable();
+                .csrf()
+                .csrfTokenRepository(getCsrfTokenRepository());
+    }
+
+    private CsrfTokenRepository getCsrfTokenRepository() {
+        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+        repository.setSessionAttributeName("_csrf");
+        return repository;
     }
 
     @Bean
