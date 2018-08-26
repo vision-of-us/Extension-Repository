@@ -1,12 +1,12 @@
 package com.telerik.extension_repository.models.bindingModels.user;
 
 public class EditUserModel {
-    private Integer id;
+    private Long id;
     private String username;
     private Boolean isEnabled;
     private String[] authorities;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -18,7 +18,7 @@ public class EditUserModel {
         isEnabled = enabled;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
