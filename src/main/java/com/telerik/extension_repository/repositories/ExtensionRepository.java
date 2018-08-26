@@ -35,6 +35,10 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     "WHERE e.status = :pending")
     List<Extension> findAllByStatus(@Param("pending") Status pending);
 
+    @Query(value =
+            "SELECT e FROM Extension AS e " +
+                    "WHERE e.isFeatured = :isFeatured")
+    List<Extension> findAllFeatured(@Param("isFeatured") boolean isFeatured);
 
     List<Extension> getAllByTags(String tag);
 

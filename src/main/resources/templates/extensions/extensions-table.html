@@ -1,32 +1,38 @@
 <div class="container">
     <form>
-        <input type="submit" name="filter" class="btn btn-link" value="Ascending"/>
-        <input type="submit" name="filter" class="btn btn-link" value="Descending"/>
+        <a href="/extensions/featured" class="btn btn-warning m-1"> Featured</a>
+        <a href="/extensions/new" class="btn btn-warning m-1"> New</a>
+        <a href="/extensions/popular" class="btn btn-warning m-1"> Popular</a>
     </form>
 
-    <a href="/extensions/add" class="btn btn-warning m-1"><strong>+</strong> Add Extension</a>
     <table class="table table-striped table-hover">
         <thead>
         <tr>
 
             <th>Name</th>
-            <th>Description</th>
-            <th>Link</th>
+            <th>Version</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="extension : ${extensions}">
             <th scope="row" th:text="${extension.name}"></th>
-            <td th:text="${extension.description}"></td>
-            <td th:text="${extension.download_link}"></td>
+            <td th:text="${extension.version}"></td>
             <td>
                 <a th:href="@{/extensions/{id}(id = ${extension.id})}">Details</a>
             </td>
             <td>
-                <a th:href="@{/extensions/edit/{id}(id=${extension.id})}">Edit</a>
+                <a th:href="@{/extensions/download/{id}(id=${extension.id})}">Download</a>
+            </td>
+            <td>
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/extensions/edit/{id}(id = ${extension.id})}">Edit</a>
+            </td>
+            <td>
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/extensions/delete/{id}(id = ${extension.id})}">Delete</a>
             </td>
         </tr>
         </tbody>
     </table>
+
+    <a href="/extensions/add" class="btn btn-warning m-1"><strong>+</strong> Add Extension</a>
 </div>
 

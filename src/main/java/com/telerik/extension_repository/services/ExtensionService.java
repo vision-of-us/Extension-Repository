@@ -22,5 +22,6 @@ public interface ExtensionService {
     List<ExtensionModelView> getAllByName(String name);
     void delete(ExtensionStatusView id);
     List<ExtensionModelView> getAllPending();
+    List<ExtensionDetailsView> getAllfeatured();
 
 }

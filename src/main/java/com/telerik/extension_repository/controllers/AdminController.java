@@ -41,6 +41,7 @@ public class AdminController {
         model.addAttribute("view","/admin/admin-pending-extensions");
         return "base-layout";
     }
+
     @GetMapping("pending/edit/{id}")
     public String getEditPage(Model model, @PathVariable Long id){
         ExtensionStatusView extensionStatusView = this.extensionService.getById(id);

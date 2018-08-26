@@ -50,6 +50,17 @@ public List<ExtensionModelView> getAllPending() {
     return extensionModelViews;
 }
 
+    @Override
+    public List<ExtensionDetailsView> getAllfeatured() {
+        List<Extension> extensions = this.extensionRepository.findAllFeatured(true);
+        List<ExtensionDetailsView> extensionModelViews = new ArrayList<>();
+        for (Extension extension : extensions) {
+            ExtensionDetailsView extensionModelView = this.modelMapper.map(extension, ExtensionDetailsView.class);
+            extensionModelViews.add(extensionModelView);
+        }
+        return extensionModelViews;
+    }
+
 
     @Override
     public List<ExtensionModelView> getAll() {
