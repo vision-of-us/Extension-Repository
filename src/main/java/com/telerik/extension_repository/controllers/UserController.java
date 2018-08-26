@@ -27,35 +27,28 @@ public class UserController {
 
     @GetMapping("/register")
     public String getRegisterPage(@ModelAttribute("registrationModel") RegisterUserModel registrationModel){
-        return "register";
+        return "user/register";
     }
 
-//    @GetMapping("/login")
-//    public String getLoginPage() {
-//        return "login";
-//    }
+    @PostMapping("/register")
+    public String registerUser(@Valid @ModelAttribute("registrationModel") RegisterUserModel registrationModel, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "user/register";
+        }
 
-//    @GetMapping("/register")
-//    public String getRegisterPage() {
-//        return "register";
-//    }
+        this.userService.register(registrationModel);
+
+        return "redirect:/users/login";
+    }
 
     @GetMapping("/login")
     public String getLoginPage(@ModelAttribute("loginUser") LoginUser loginUser){
-        return "login";
+        return "user/login";
     }
 
-//    @GetMapping("/login")
-//    public String getLoginPage(@RequestParam(required = false) String error, Model model){
-//        if(error != null){
-//            model.addAttribute("error", Errors.INVALID_CREDENTIALS);
-//        }
-//
-//        return "login";
-//    }
 
     @PostMapping("/login")
-    public String loginUser(@Valid @ModelAttribute("loginUser") LoginUser loginUser, RedirectAttributes redirectAttributes, HttpSession httpSession) {
+    public String loginUser(@Valid @ModelAttribute("user") LoginUser loginUser, RedirectAttributes redirectAttributes, HttpSession httpSession) {
         LoggedUser loggedUser = this.userService.getByUsernameAndPassword(loginUser.getUsername(), loginUser.getPassword());
         if (loggedUser == null){
             List<String> errors = new ArrayList<>();
@@ -64,23 +57,9 @@ public class UserController {
             return "redirect:/users/login";
         }
 
-        httpSession.setAttribute("loginUser", loggedUser);
+        httpSession.setAttribute("user", loggedUser);
         return "redirect:/user";
     }
-
-
-
-    @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("registrationModel") RegisterUserModel registrationModel, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            return "register";
-        }
-
-        this.userService.register(registrationModel);
-
-        return "redirect:/users/login";
-    }
-
 
     @GetMapping("/users")
     public String getAllUsesPage(Model model){
@@ -90,23 +69,17 @@ public class UserController {
         return "base-layout";
     }
 
-//    @GetMapping("/user")
-//    public String getUserPage(@ModelAttribute("loginUser") LoginUser loginUser, Model model){
-//        model.addAttribute("user", loginUser);
-//        model.addAttribute("view","user");
-//        return "user";
-//    }
-
     @GetMapping("/user")
-    public String getUserPage(){
-        return "user";
+    public String getUserPage(@ModelAttribute("loginUser") LoginUser loginUser, Model model){
+        model.addAttribute("user", loginUser);
+        model.addAttribute("view","extensions/extensions-table");
+        return "base-layout";
     }
 
-    @GetMapping("/admin")
-    public String getAdminPage(){
-
-        return "admin";
+    @GetMapping("logout")
+    public String logout(HttpSession httpSession){
+        httpSession.invalidate();
+        return "redirect:/";
     }
-
 
 }

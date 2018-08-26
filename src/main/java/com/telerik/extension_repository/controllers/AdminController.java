@@ -1,8 +1,10 @@
 package com.telerik.extension_repository.controllers;
 
 
+import com.telerik.extension_repository.models.bindingModels.user.EditUserModel;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionModelView;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
+import com.telerik.extension_repository.models.viewModels.users.UserModelView;
 import com.telerik.extension_repository.services.AdminService;
 import com.telerik.extension_repository.services.ExtensionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +79,14 @@ public class AdminController {
         model.addAttribute("type","Delete");
         model.addAttribute("view","/admin/admin-extensions-modifiable");
         model.addAttribute("extension",extensionStatusView);
+        return "base-layout";
+    }
+
+    @GetMapping("/users")
+    public String getAllUsesPage(Model model){
+        List<UserModelView> users = this.adminService.getAll();
+        model.addAttribute("users", users);
+        model.addAttribute("view","all-users");
         return "base-layout";
     }
 
