@@ -1,4 +1,4 @@
-<header th:fragment="header">
+<header>
     <nav class="navbar navbar-toggleable-md navbar-light bg-info">
         <div class="container">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
@@ -10,30 +10,21 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <!--<li class="nav-item">-->
-                        <!--<a class="nav-link" th:href="@{/extensions/all}">Customers</a>-->
-                    <!--</li>-->
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/extensions/all}">Extensions</a>
                     </li>
-                    <!--<li class="nav-item">-->
-                        <!--<a class="nav-link" th:href="@{/parts/all}">Parts</a>-->
-                    <!--</li>-->
-                    <!--<li class="nav-item">-->
-                        <!--<a class="nav-link" th:href="@{/suppliers}">Suppliers</a>-->
-                    <!--</li>link-->
-                    <!--<li class="nav-item dropdown">-->
-                        <!--<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"-->
-                           <!--aria-haspopup="true" aria-expanded="false">Sales</a>-->
-                        <!--<div class="dropdown-menu">-->
-                            <!--<a class="dropdown-item" th:href="@{/sales/all}">All</a>-->
-                            <!--<a class="dropdown-item" th:href="@{/sales/all/discounted}">Discounted</a>-->
-                            <!--<a th:if="${session.user}" class="dropdown-item" th:href="@{/sales/add}">Add</a>-->
-                        <!--</div>-->
-                    <!--</li>-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">Extensions</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" th:href="@{/extensions/all}">All</a>
+                            <a class="dropdown-item" th:href="@{/extensions/user}">Yours</a>
+                            <a th:if="${session.user}" class="dropdown-item" th:href="@{/extensions/add}">Add</a>
+                        </div>
+                    </li>
                 </ul>
                 <ul class="navbar-nav">
-                    <th:block th:switch="${session.user}">
+                    <th:block th:switch="${session.loginUser}">
                         <th:block th:case="null">
                             <li class="nav-item">
                                 <a class="nav-link" href="/users/login">Login</a>
@@ -43,19 +34,32 @@
                             </li>
                         </th:block>
                         <th:block th:case="*">
-                            <!--<li class="nav-item">-->
-                                <!--<a class="nav-link" href="/logs/all">Logs</a>-->
-                            <!--</li>-->
-                            <!--<li class="nav-item">-->
-                                <!--<a class="nav-link" href="/user/logout">Logout</a>-->
-                            <!--</li>-->
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logs/all">Logs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/users/logout">Logout</a>
+                            </li>
                         </th:block>
-
+                        <!--<th:block th:case="null">-->
+                            <!--<li class="nav-item">-->
+                                <!--<a class="nav-link" th:href="@{/users/login}">Login</a>-->
+                            <!--</li>-->
+                            <!--<li class="nav-item">-->
+                                <!--<a class="nav-link" th:href="@{/users/register}">Register</a>-->
+                            <!--</li>-->
+                        <!--</th:block>-->
+                        <!--<th:block th:case="*">-->
+                            <!--<li class="nav-item">-->
+                                <!--<a class="nav-link" th:href="@{/logs/all}">Logs</a>-->
+                            <!--</li>-->
+                            <!--<li class="nav-item">-->
+                                <!--<a class="nav-link" th:href="@{/user/logout}">Logout</a>-->
+                            <!--</li>-->
+                        <!--</th:block>-->
                     </th:block>
-
                 </ul>
             </div>
-
         </div>
     </nav>
 </header>

@@ -44,7 +44,7 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
 
     @Modifying
     @Query("UPDATE Extension " +
-            "SET name = :name, description = :description WHERE id = :id")
-    void update(@Param("name") String name, @Param("description") String description, @Param("id") Long id);
+            "SET name = :name, description = :description, status =:status WHERE id = :id")
+    void update(@Param("name") String name, @Param("description") String description, @Param("status") Status status, @Param("id") Long id);
 
 }

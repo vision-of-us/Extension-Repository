@@ -150,7 +150,7 @@ public List<ExtensionModelView> getAllPending() {
 
     @Override
     public void update(ExtensionStatusView extensionModel) {
-        this.extensionRepository.update(extensionModel.getName(), extensionModel.getDescription(), extensionModel.getId());
+        this.extensionRepository.update(extensionModel.getName(), extensionModel.getDescription(),extensionModel.getStatus() ,extensionModel.getId());
     }
 
     @Override

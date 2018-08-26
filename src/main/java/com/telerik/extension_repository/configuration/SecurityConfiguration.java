@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/users/register", "/login/**", "/css/**", "/js/**", "http://code.jquery.com/jquery-1.8.3.min.js").permitAll()
+                .antMatchers("/", "/users/register", "/login/**", "/bootstrap/**", "/jquery/**", "http://code.jquery.com/jquery-1.8.3.min.js").permitAll()
                 .antMatchers("/user/**").access("hasRole('ADMIN') OR hasRole('USER')")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -44,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .and()
                 .rememberMe()
-                .rememberMeCookieName("RememberMeFromLecture")
+                .rememberMeCookieName("RememberMe")
                 .rememberMeParameter("rememberMe")
                 .key("randomKey")
                 .tokenValiditySeconds(1000)
