@@ -31,6 +31,8 @@ public class ExtensionDetailsView {
 
     private Date last_commit_date;
 
+    private boolean isFeatured;
+
     public Long getId() {
         return id;
     }
@@ -125,5 +127,13 @@ public class ExtensionDetailsView {
 
     public void setLast_commit_date(Date last_commit_date) {
         this.last_commit_date = last_commit_date;
+    }
+
+    public boolean isFeatured() {
+        return isFeatured;
+    }
+
+    public void setFeatured(boolean featured) {
+        isFeatured = featured;
     }
 }

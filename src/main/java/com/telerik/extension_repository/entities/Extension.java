@@ -32,6 +32,8 @@ public class Extension {
 
     private Date last_commit_date;
 
+    private boolean isFeatured;
+
     @Enumerated(value = EnumType.STRING)
     private Status status;
 
@@ -154,5 +156,25 @@ public class Extension {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isFeatured() {
+        return isFeatured;
+    }
+
+    public void setFeatured(boolean featured) {
+        isFeatured = featured;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 }

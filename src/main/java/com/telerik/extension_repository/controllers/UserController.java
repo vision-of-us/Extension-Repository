@@ -71,13 +71,13 @@ public class UserController {
     @GetMapping("/users/edit/{id}")
     private String getEditUserPage(Model model, @PathVariable Long id){
         EditUserModel editUserModel = this.userService.getById(id);
-        model.addAttribute("user",editUserModel);
+        model.addAttribute("user", editUserModel);
         model.addAttribute("view","edit-user");
         return "base-layout";
     }
 
     @PostMapping("/users/edit/{id}")
-    public String  editUser(@PathVariable Long id,@ModelAttribute EditUserModel editUserModel){
+    public String  editUser(@PathVariable Long id, @ModelAttribute EditUserModel editUserModel){
         editUserModel.setId(id);
         this.userService.edit(editUserModel);
         return "redirect:/users";

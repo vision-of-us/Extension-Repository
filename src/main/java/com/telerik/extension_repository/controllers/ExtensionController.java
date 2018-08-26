@@ -100,9 +100,18 @@ public class ExtensionController {
 //        return "base-layout";
 //    }
 
+    // WO
     @GetMapping("all")
     public String getAllExtensionPage(Model model){
         List<ExtensionModelView> extensionViews = this.extensionService.getAll();
+        model.addAttribute("extensions", extensionViews);
+        model.addAttribute("view","/extensions/extensions-table");
+        return "base-layout";
+    }
+
+    @GetMapping("featured")
+    public String getFeaturedExtensionsPage(Model model){
+        List<ExtensionDetailsView> extensionViews = this.extensionService.getAllfeatured();
         model.addAttribute("extensions", extensionViews);
         model.addAttribute("view","/extensions/extensions-table");
         return "base-layout";
