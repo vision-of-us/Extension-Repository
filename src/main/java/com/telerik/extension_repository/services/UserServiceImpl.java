@@ -3,10 +3,12 @@ package com.telerik.extension_repository.services;
 import com.telerik.extension_repository.entities.Authority;
 import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.errors.Errors;
+import com.telerik.extension_repository.exceptions.UserNotFoundException;
 import com.telerik.extension_repository.models.bindingModels.user.*;
 import com.telerik.extension_repository.models.viewModels.users.UserModelView;
 import com.telerik.extension_repository.repositories.AuthorityRepository;
 import com.telerik.extension_repository.repositories.UserRepository;
+import com.telerik.extension_repository.utils.Constants;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,7 +42,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void register(RegisterUserModel registrationModel) {
+    public void register(EditUserModel registrationModel) {
         User user = this.modelMapper.map(registrationModel, User.class);
         String encryptedPassword = this.bCryptPasswordEncoder.encode(registrationModel.getPassword());
         user.setPassword(encryptedPassword);
@@ -60,11 +62,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<UserModelView> getAll() {
+    public List<EditUserModel> getAll() {
         List<User> users = this.userRepository.findAll();
-        List<UserModelView> userModelViews = new ArrayList<>();
+        List<EditUserModel> userModelViews = new ArrayList<>();
         for (User user : users) {
-            UserModelView userModelView = this.modelMapper.map(user, UserModelView.class);
+            EditUserModel userModelView = this.modelMapper.map(user, EditUserModel.class);
             userModelViews.add(userModelView);
         }
         return userModelViews;
@@ -72,7 +74,20 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public EditUserModel getById(Long id) {
-        return null;
+        User user = this.userRepository.findById(id);
+
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+
+        EditUserModel userModelView = this.modelMapper.map(user, EditUserModel.class);
+        return userModelView;
+    }
+
+    @Override
+    public boolean isEnabled(Long id) {
+        User user = this.userRepository.findById(id);
+        return user.isEnabled();
     }
 
     @Override
@@ -103,8 +118,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void delete() {
+    public EditUserModel getUserByUsername(String username) {
+        return null;
+    }
 
+    @Override
+    public boolean isUsernameAvailable(String username) {
+        return false;
     }
 
     @Override
@@ -117,6 +137,12 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
+    @Override
+    public void deleteUserById(Long id) {
+        User user = this.userRepository.findById(id);
+        this.userRepository.delete(user);
+    }
+
     private Set<Authority> getAuthorities(String authority) {
         Set<Authority> userAuthorities = new HashSet<>();
 
@@ -125,6 +151,10 @@ public class UserServiceImpl implements UserService{
         return userAuthorities;
     }
 
+    @Override
+    public void disableUser(Long id) {
+        this.userRepository.update(id);
+    }
 
     private String getUserAuthority(String userId) {
         return this

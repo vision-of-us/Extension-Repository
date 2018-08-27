@@ -11,7 +11,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String username;
 
@@ -40,7 +40,7 @@ public class User implements UserDetails {
         this.extensions = new HashSet<>(0);
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

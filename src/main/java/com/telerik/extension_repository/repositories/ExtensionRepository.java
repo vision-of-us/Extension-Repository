@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Blob;
 import java.util.List;
 
 @Repository
@@ -50,5 +51,15 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     @Query("UPDATE Extension " +
             "SET name = :name, description = :description, status =:status WHERE id = :id")
     void update(@Param("name") String name, @Param("description") String description, @Param("status") Status status, @Param("id") Long id);
+
+    @Query(value =
+            "SELECT e.file FROM Extension AS e " +
+                    "WHERE e.id = :id")
+    Blob downloadFile(@Param("id") Long id);
+
+    @Query(value =
+            "SELECT e FROM Extension AS e " +
+                    "WHERE e.id = :id")
+    Extension downloadFileAsExtension(@Param("id") Long id);
 
 }

@@ -4,6 +4,7 @@ public class UserModelView {
     private Long id;
     private String username;
     private Boolean isEnabled;
+    private Boolean isAdmin;
 
     public Long getId() {
         return id;
@@ -27,5 +28,13 @@ public class UserModelView {
 
     public void setEnabled(Boolean enabled) {
         isEnabled = enabled;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 }

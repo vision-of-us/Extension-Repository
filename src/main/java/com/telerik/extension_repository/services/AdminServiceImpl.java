@@ -1,6 +1,8 @@
 package com.telerik.extension_repository.services;
 
+import com.telerik.extension_repository.entities.Authority;
 import com.telerik.extension_repository.entities.Extension;
+import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.bindingModels.extensions.AddExtensionModel;
 import com.telerik.extension_repository.models.bindingModels.extensions.EditExtensionModel;
@@ -10,6 +12,7 @@ import com.telerik.extension_repository.models.bindingModels.user.EditUserModel;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 import com.telerik.extension_repository.models.viewModels.users.UserModelView;
 import com.telerik.extension_repository.models.viewModels.users.UserView;
+import com.telerik.extension_repository.utils.Constants;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,8 +38,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void approveExtension(AddExtensionModel addExtensionModel) {
-      extensionService.approve(addExtensionModel);
+    public void approveExtension(ExtensionStatusView extensionModel) {
+        extensionService.approve(extensionModel);
     }
 
     @Override
@@ -44,15 +47,12 @@ public class AdminServiceImpl implements AdminService {
 
     }
 
-    @Override
-    public void enableUser(UserView userView) {
-
-    }
 
     @Override
-    public void disableUser(UserView userView) {
-
+    public void disableUser(Long id) {
+        this.userService.disableUser(id);
     }
+
 
     @Override
     public void editExtension(ExtensionStatusView extensionStatusView) {
@@ -60,12 +60,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<UserModelView> getAll() {
-        return userService.getAll();
+    public void deleteUserById(Long id) {
+     this.userService.deleteUserById(id);
     }
 
-    @Override
-    public EditUserModel getById(Long id) {
-        return null;
-    }
 }

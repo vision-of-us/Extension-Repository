@@ -9,6 +9,7 @@ import com.telerik.extension_repository.models.bindingModels.extensions.EditExte
 import com.telerik.extension_repository.models.bindingModels.extensions.RelatedExtensionModel;
 import com.telerik.extension_repository.models.viewModels.extensions.*;
 import com.telerik.extension_repository.repositories.ExtensionRepository;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -125,7 +133,7 @@ public List<ExtensionModelView> getAllPending() {
     }
 
     @Override
-    public void approve(AddExtensionModel addExtensionModel) {
+    public void approve(ExtensionStatusView addExtensionModel) {
         addExtensionModel.setStatus(Status.APPROVED);
         ModelMapper modelMapper = new ModelMapper();
         Extension extension = modelMapper.map(addExtensionModel, Extension.class);
@@ -165,8 +173,8 @@ public List<ExtensionModelView> getAllPending() {
     }
 
     @Override
-    public void delete(ExtensionStatusView editExtensionModel) {
-        this.extensionRepository.deleteById(editExtensionModel.getId());
+    public void delete(Long id) {
+        this.extensionRepository.deleteById(id);
     }
 
 }

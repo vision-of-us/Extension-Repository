@@ -4,12 +4,12 @@
         <tr>
             <th>Id</th>
             <th>Username</th>
-            <th>Is Enable</th>
+            <th>Is Enabled?</th>
         </tr>
         </thead>
         <tbody>
 
-        <tr th:each="user : ${users}">
+        <tr th:each="user : ${users}" th:object="${user}">
             <th scope="row" th:text="${user.id}">1</th>
             <td th:text="${user.username}">Mark</td>
             <td th:text="${user.enabled}">True</td>

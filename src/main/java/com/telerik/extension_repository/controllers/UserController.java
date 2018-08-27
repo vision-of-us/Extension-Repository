@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute RegisterUserModel registerUserModel, BindingResult bindingResult,Model model){
+    public String registerUser(@Valid @ModelAttribute EditUserModel registerUserModel, BindingResult bindingResult,Model model){
         if (bindingResult.hasErrors()){
             model.addAttribute("view","user/register-user");
             return "base-layout";
@@ -55,13 +55,18 @@ public class UserController {
         return "base-layout";
     }
 
-    @GetMapping("/users")
-    public String getAllUsesPage(Model model){
-        List<UserModelView> users = this.userService.getAll();
-        model.addAttribute("users", users);
-        model.addAttribute("view","all-users");
-        return "base-layout";
-    }
+//    @PostMapping("/login")
+//    public String loginUser(@Valid @ModelAttribute EditUserModel registerUserModel, BindingResult bindingResult, Model model){
+//        if (bindingResult.hasErrors()){
+//            model.addAttribute("view","user/login-user");
+//            return "base-layout";
+//        }
+//
+//        this.userService.register(registerUserModel);
+//
+//        return "redirect:/login";
+//
+//    }
 
     @ModelAttribute(name = "roles")
     private List<AuthorityModel> getRoles(){

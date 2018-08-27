@@ -22,6 +22,13 @@
             </td>
             <td>
                 <a th:href="@{/extensions/download/{id}(id=${extension.id})}">Download</a>
+                <div>
+                    <ul>
+                        <li th:each="file : ${files}">
+                            <a th:href="${file}" th:text="${file}" />
+                        </li>
+                    </ul>
+                </div>
             </td>
             <td>
                 <a sec:authorize="hasRole('ADMIN')" th:href="@{/extensions/edit/{id}(id = ${extension.id})}">Edit</a>

@@ -1,12 +1,13 @@
 package com.telerik.extension_repository.controllers;
 
 
+import com.telerik.extension_repository.exceptions.UserNotFoundException;
 import com.telerik.extension_repository.models.bindingModels.user.EditUserModel;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionModelView;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
-import com.telerik.extension_repository.models.viewModels.users.UserModelView;
 import com.telerik.extension_repository.services.AdminService;
 import com.telerik.extension_repository.services.ExtensionService;
+import com.telerik.extension_repository.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,9 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ExtensionService extensionService;
@@ -58,19 +62,36 @@ public class AdminController {
         return "redirect:/admin/pending";
     }
 
+//    @GetMapping("pending/approve/{id}")
+//    public String getApproveExtensionPage(Model model,@PathVariable Long id){
+//        ExtensionStatusView extensionStatusView = this.extensionService.getById(id);
+//        model.addAttribute("type","Approve");
+//        model.addAttribute("view","/admin/admin-extensions-modifiable");
+//        model.addAttribute("extension", extensionStatusView);
+//        return "base-layout";
+//    }
+
     @GetMapping("pending/approve/{id}")
     public String getApproveExtensionPage(Model model,@PathVariable Long id){
         ExtensionStatusView extensionStatusView = this.extensionService.getById(id);
-        model.addAttribute("type","Approve");
-        model.addAttribute("view","/admin/admin-extensions-modifiable");
-        model.addAttribute("extension", extensionStatusView);
+        this.extensionService.approve(extensionStatusView);
+        model.addAttribute("view","/admin/admin-pending-extensions");
         return "base-layout";
     }
+
+
+    @PostMapping("pending/approve/{id}")
+    public String approveExtension(@ModelAttribute ExtensionStatusView editPartModel, @PathVariable Long id){
+        editPartModel.setId(id);
+        this.extensionService.approve(editPartModel);
+        return "redirect:/admin/pending";
+    }
+
 
     @PostMapping("pending/delete/{id}")
     public String deleteExtension(@ModelAttribute ExtensionStatusView editPartModel, @PathVariable Long id){
         editPartModel.setId(id);
-        this.extensionService.delete(editPartModel);
+        this.extensionService.delete(id);
         return "redirect:/admin/pending";
     }
 
@@ -84,11 +105,39 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public String getAllUsesPage(Model model){
-        List<UserModelView> users = this.adminService.getAll();
+    public String getAllUsersPage(Model model){
+        List<EditUserModel> users = this.userService.getAll();
         model.addAttribute("users", users);
         model.addAttribute("view","all-users");
         return "base-layout";
+    }
+
+
+    @PostMapping("/users/delete/{userId}")
+    public String deleteUser(@PathVariable Long userId, Model model) {
+        EditUserModel user = this.userService.getById(userId);
+        if (user != null) {
+            this.adminService.deleteUserById(userId);
+        }
+
+        return "redirect:/admin/users";
+    }
+
+    @PostMapping("/users/disableUser/{userId}")
+    public String changeUserAccountAccess(@PathVariable Long userId, Model model) {
+        EditUserModel user = this.userService.getById(userId);
+        if (user != null) {
+            this.adminService.disableUser(userId);
+        }
+
+        return "redirect:/admin/users";
+    }
+
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public String catchUserNotFoundException() {
+
+        return "exceptions/user-not-found";
     }
 
 //    @PostMapping("pending")

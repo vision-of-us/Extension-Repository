@@ -17,19 +17,19 @@ import java.util.List;
 
 public interface AdminService{
 
-    void approveExtension(AddExtensionModel addExtensionModel);
+    @PreAuthorize("hasRole('ADMIN')")
+    void approveExtension(ExtensionStatusView extensionModel);
 
     @PreAuthorize("hasRole('ADMIN')")
     void deleteExtension(RelatedExtensionModel relatedExtensionModel);
 
-    void enableUser(UserView userView);
+    void disableUser(Long id);
 
-    void disableUser(UserView userView);
+//    void enableUser(UserView userView);
+//
+//    void disableUser(UserModelView userView);
 
     void editExtension(ExtensionStatusView extensionStatusView);
 
-    List<UserModelView> getAll();
-
-    EditUserModel getById(Long id);
-
+    void deleteUserById(Long id);
 }

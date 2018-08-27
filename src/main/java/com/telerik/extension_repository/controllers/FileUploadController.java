@@ -32,7 +32,7 @@
 //        this.storageService = storageService;
 //    }
 //
-//    @GetMapping("/")
+//    @GetMapping("extensions/add/files")
 //    public String listUploadedFiles(Model model) throws IOException {
 //
 //        model.addAttribute("files", storageService.loadAll().map(
