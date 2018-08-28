@@ -7,6 +7,7 @@ public class ExtensionStatusView {
     private String name;
     private Status status;
     private String description;
+    private Long ownerId;
 
     public Long getId() {
         return id;
@@ -38,5 +39,13 @@ public class ExtensionStatusView {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 }

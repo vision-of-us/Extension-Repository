@@ -21,7 +21,7 @@ public interface AdminService{
     void approveExtension(ExtensionStatusView extensionModel);
 
     @PreAuthorize("hasRole('ADMIN')")
-    void deleteExtension(RelatedExtensionModel relatedExtensionModel);
+    void deleteExtension(Long id);
 
     void disableUser(Long id);
 

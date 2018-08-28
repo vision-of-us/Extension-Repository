@@ -5,6 +5,7 @@ import com.telerik.extension_repository.models.bindingModels.user.EditUserModel;
 import com.telerik.extension_repository.models.bindingModels.user.LoggedUser;
 import com.telerik.extension_repository.models.bindingModels.user.LoginUser;
 import com.telerik.extension_repository.models.bindingModels.user.RegisterUserModel;
+import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 import com.telerik.extension_repository.models.viewModels.users.UserModelView;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,5 +24,6 @@ public interface UserService extends UserDetailsService {
     boolean isUsernameAvailable(String username);
     void disableUser(Long id);
     boolean isEnabled(Long id);
+    List<ExtensionStatusView> getOwnsExtensions(Long id);
 
 }

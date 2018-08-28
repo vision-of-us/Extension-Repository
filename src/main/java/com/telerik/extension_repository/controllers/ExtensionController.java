@@ -149,18 +149,17 @@ public class ExtensionController {
     }
 
 
-    @GetMapping("delete/{id}")
-    public String getDeleteExtensionPage(Model model, @PathVariable Long id){
-        EditExtensionModel extensionModel = this.extensionService.getByIdToEdit(id);
-        model.addAttribute("view","/extensions/extension-edit");
-        model.addAttribute("type","Delete");
-        model.addAttribute("extension", extensionModel);
-        return "base-layout";
-    }
+//    @GetMapping("delete/{id}")
+//    public String getDeleteExtensionPage(Model model, @PathVariable Long id){
+//        EditExtensionModel extensionModel = this.extensionService.getByIdToEdit(id);
+//        model.addAttribute("view","/extensions/extension-edit");
+//        model.addAttribute("type","Delete");
+//        model.addAttribute("extension", extensionModel);
+//        return "base-layout";
+//    }
 
-    @PostMapping("delete/{id}")
-    public String deletePart(@ModelAttribute ExtensionStatusView extensionModel, @PathVariable Long id){
-        extensionModel.setId(id);
+    @GetMapping("delete/{id}")
+    public String deletePart(@PathVariable Long id){
         this.extensionService.delete(id);
         return "redirect:/extensions/all";
     }

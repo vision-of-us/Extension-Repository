@@ -43,8 +43,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteExtension(RelatedExtensionModel relatedExtensionModel) {
-
+    public void deleteExtension(Long id) {
+        this.extensionService.delete(id);
     }
 
 

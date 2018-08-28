@@ -8,20 +8,22 @@
     </tr>
     </thead>
     <tbody>
+
     <tr th:each="extension : ${extensions}">
         <th scope="row" th:text="${extension.name}"></th>
         <td th:text="${extension.description}"></td>
-        <td>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <a th:href="@{/admin/pending/approve/{id}(id=${extension.id})}">Approve</a>
+
+        <td style="padding: 2px; vertical-align: middle; empty-cells: show">
+            <form method="post" th:action="@{/admin/pending/approve/{id}(id=${extension.id})}">
+                <button type="submit" class="card-button btn btn-success" name="Approve">Approve</button>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            </form>
         </td>
-        <td>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <a th:href="@{/admin/pending/delete/{id}(id=${extension.id})}">Delete</a>
-        </td>
-        <td>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <a th:href="@{/admin/pending/edit/{id}(id=${extension.id})}">Edit</a>
+        <td style="padding: 2px; vertical-align: middle; empty-cells: show">
+            <form method="post" th:action="@{/admin/pending/delete/{id}(id=${extension.id})}">
+                <button type="submit" class="card-button btn btn-danger" name="Delete">Delete</button>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            </form>
         </td>
     </tr>
     </tbody>

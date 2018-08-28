@@ -88,30 +88,44 @@ public class AdminController {
     }
 
 
-    @PostMapping("pending/delete/{id}")
-    public String deleteExtension(@ModelAttribute ExtensionStatusView editPartModel, @PathVariable Long id){
-        editPartModel.setId(id);
-        this.extensionService.delete(id);
-        return "redirect:/admin/pending";
-    }
+//    @PostMapping("pending/delete/{id}")
+//    public String deleteExtension(@ModelAttribute ExtensionStatusView editPartModel, @PathVariable Long id){
+//        editPartModel.setId(id);
+//        this.extensionService.delete(id);
+//        return "redirect:/admin/pending";
+//    }
 
-    @GetMapping("pending/delete/{id}")
-    public String getDeletePartPage(Model model, @PathVariable Long id){
-        ExtensionStatusView extensionStatusView = this.extensionService.getById(id);
-        model.addAttribute("type","Delete");
-        model.addAttribute("view","/admin/admin-extensions-modifiable");
-        model.addAttribute("extension",extensionStatusView);
-        return "base-layout";
+// WO
+//    @GetMapping("pending/delete/{id}")
+//    public String getDeletePartPage(Model model, @PathVariable Long id){
+//        ExtensionStatusView extensionStatusView = this.extensionService.getById(id);
+//        model.addAttribute("type","Delete");
+//        model.addAttribute("view","/admin/admin-extensions-modifiable");
+//        model.addAttribute("extension",extensionStatusView);
+//        return "base-layout";
+//    }
+
+    @PostMapping("pending/delete/{id}")
+    public String deleteExtension(@PathVariable Long id, Model model) {
+            this.adminService.deleteExtension(id);
+        return "redirect:/admin/pending";
     }
 
     @GetMapping("/users")
     public String getAllUsersPage(Model model){
         List<EditUserModel> users = this.userService.getAll();
         model.addAttribute("users", users);
-        model.addAttribute("view","all-users");
+        model.addAttribute("view","/admin/all-users");
         return "base-layout";
     }
 
+    @GetMapping("/user")
+    public String getUserByUsername(Model model, @RequestParam(value = "username", required = true) String username){
+        EditUserModel userModel = this.userService.getUserByUsername(username);
+        model.addAttribute("user", userModel);
+        model.addAttribute("view","/admin/all-users");
+        return "base-layout";
+    }
 
     @PostMapping("/users/delete/{userId}")
     public String deleteUser(@PathVariable Long userId, Model model) {

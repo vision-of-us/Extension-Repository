@@ -5,6 +5,7 @@ import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.errors.Errors;
 import com.telerik.extension_repository.exceptions.UserNotFoundException;
 import com.telerik.extension_repository.models.bindingModels.user.*;
+import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
 import com.telerik.extension_repository.models.viewModels.users.UserModelView;
 import com.telerik.extension_repository.repositories.AuthorityRepository;
 import com.telerik.extension_repository.repositories.UserRepository;
@@ -91,6 +92,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public List<ExtensionStatusView> getOwnsExtensions(Long id) {
+        return null;
+    }
+
+    @Override
     public void edit(EditUserModel editUserModel) {
 
     }
@@ -119,7 +125,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public EditUserModel getUserByUsername(String username) {
-        return null;
+        Optional<User> user = this.userRepository.findByUsername(username);
+        ModelMapper modelMapper = new ModelMapper();
+        EditUserModel userByName = null;
+        if (user != null){
+            userByName = modelMapper.map(user, EditUserModel.class);
+        }
+        return userByName;
     }
 
     @Override
