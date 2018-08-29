@@ -1,12 +1,9 @@
 package com.telerik.extension_repository.repositories;
 
 
-import com.telerik.extension_repository.entities.Extension;
-import com.telerik.extension_repository.entities.User;
+import com.telerik.extension_repository.entities.*;
 import com.telerik.extension_repository.entities.enums.Status;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
