@@ -1,4 +1,4 @@
-package com.telerik.extension_repository.services;
+package com.telerik.extension_repository.services.interfaces;
 
 import com.telerik.extension_repository.models.bindingModels.extensions.AddExtensionModel;
 import com.telerik.extension_repository.models.bindingModels.extensions.EditExtensionModel;

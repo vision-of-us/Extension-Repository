@@ -1,4 +1,4 @@
-package com.telerik.extension_repository.services;
+package com.telerik.extension_repository.services.interfaces;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

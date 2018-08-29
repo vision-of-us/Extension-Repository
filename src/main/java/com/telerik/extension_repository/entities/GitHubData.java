@@ -1,6 +1,7 @@
 package com.telerik.extension_repository.entities;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -13,7 +14,7 @@ public class GitHubData {
     private long id;
 
     @OneToOne(cascade = CascadeType.ALL,
-            mappedBy = "gitHubData") //TODO -> where is used with name  ..info
+            mappedBy = "gitHubData")
     private Extension extension;
 
     @Column(name = "num_of_pulls")
@@ -23,13 +24,12 @@ public class GitHubData {
     private String issuesCount;
 
     @Column(name = "latest_commit")
-    private String lastCommit;
+    private Date lastCommit;
 
     public GitHubData(){
-
     }
 
-    public GitHubData(Extension extension, String pullsCount, String issuesCount, String lastCommit) {
+    public GitHubData(Extension extension, String pullsCount, String issuesCount, Date lastCommit) {
         this.extension = extension;
         this.pullsCount = pullsCount;
         this.issuesCount = issuesCount;
@@ -44,11 +44,11 @@ public class GitHubData {
         this.id = id;
     }
 
-    public Extension getParent() {
+    public Extension getExtension() {
         return extension;
     }
 
-    public void setParent(Extension extension) {
+    public void setExtension(Extension extension) {
         this.extension = extension;
     }
 
@@ -68,11 +68,11 @@ public class GitHubData {
         this.issuesCount = issuesCount;
     }
 
-    public String getLastCommit() {
+    public Date getLastCommit() {
         return lastCommit;
     }
 
-    public void setLastCommit(String lastCommit) {
+    public void setLastCommit(Date lastCommit) {
         this.lastCommit = lastCommit;
     }
 }

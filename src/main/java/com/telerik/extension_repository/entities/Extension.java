@@ -1,9 +1,7 @@
 package com.telerik.extension_repository.entities;
 
 import com.telerik.extension_repository.entities.enums.Status;
-
 import javax.persistence.*;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -26,11 +24,11 @@ public class Extension {
 
     private String download_link;
 
-    private int number_of_open_issues;
-
-    private int number_of_pull_request;
-
-    private Date last_commit_date;
+//    private int number_of_open_issues;
+//
+//    private int number_of_pull_request;
+//
+//    private Date last_commit_date;
 
     private boolean isFeatured;
 
@@ -56,7 +54,7 @@ public class Extension {
     @JoinTable(name = "tags_extensions",
             joinColumns =  {@JoinColumn(name = "extension_id")} ,
             inverseJoinColumns =  {@JoinColumn(name = "tag_id")})
-    private Set<Tag>  tags;
+    private Set<Tag> tags;
 
     public Long getId() {
         return id;
@@ -108,30 +106,6 @@ public class Extension {
 
     public void setDownload_link(String download_link) {
         this.download_link = download_link;
-    }
-
-    public int getNumber_of_open_issues() {
-        return number_of_open_issues;
-    }
-
-    public void setNumber_of_open_issues(int number_of_open_issues) {
-        this.number_of_open_issues = number_of_open_issues;
-    }
-
-    public int getNumber_of_pull_request() {
-        return number_of_pull_request;
-    }
-
-    public void setNumber_of_pull_request(int number_of_pull_request) {
-        this.number_of_pull_request = number_of_pull_request;
-    }
-
-    public Date getLast_commit_date() {
-        return last_commit_date;
-    }
-
-    public void setLast_commit_date(Date last_commit_date) {
-        this.last_commit_date = last_commit_date;
     }
 
     public User getOwner() {

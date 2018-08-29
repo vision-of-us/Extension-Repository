@@ -1,6 +1,7 @@
 package com.telerik.extension_repository.services;
 
 
+import com.telerik.extension_repository.services.interfaces.AuthorityService;
 import org.modelmapper.ModelMapper;
 
 import com.telerik.extension_repository.entities.Authority;

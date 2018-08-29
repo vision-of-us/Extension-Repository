@@ -124,6 +124,7 @@ CREATE TABLE IF NOT EXISTS `users_authorities` (
   CONSTRAINT `FK_users_authorities_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
 -- Dumping data for table extension_repository.users_authorities: ~0 rows (approximately)
 /*!40000 ALTER TABLE `users_authorities` DISABLE KEYS */;
 /*!40000 ALTER TABLE `users_authorities` ENABLE KEYS */;

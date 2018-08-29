@@ -6,9 +6,10 @@ import com.telerik.extension_repository.entities.enums.Status;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import java.sql.Blob;
 import java.util.List;
+
+//TODO -> documentation
 
 @Repository
 public interface ExtensionRepository extends JpaRepository<Extension, Long> {
@@ -19,7 +20,6 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
 
     void deleteById(Long id);
 
-    // TODO documentation
     Extension save(Extension extension);
 
     @Query(value =

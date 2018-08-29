@@ -1,4 +1,4 @@
-package com.telerik.extension_repository.services;
+package com.telerik.extension_repository.services.interfaces;
 
 import com.telerik.extension_repository.entities.Extension;
 import com.telerik.extension_repository.entities.enums.Status;

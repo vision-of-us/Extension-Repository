@@ -11,7 +11,6 @@ public interface GitHubRepository extends JpaRepository<GitHubData, Long> {
 
     void deleteById(long id);
 
-
     @Query(value =
             "SELECT g FROM GitHubData AS g " +
                     "ORDER BY g.id")
@@ -27,6 +26,5 @@ public interface GitHubRepository extends JpaRepository<GitHubData, Long> {
             "SET pullsCount = :pullsCount, issuesCount = :issuesCount, lastCommit = :lastCommit where id =:id")
     void update(@Param("pullsCount") String pullsCount, @Param("issuesCount") String issuesCount,
                 @Param("lastCommit") String lastCommit, @Param("id") long id);
-
 
 }

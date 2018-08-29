@@ -2,28 +2,17 @@ package com.telerik.extension_repository.services;
 
 
 import com.telerik.extension_repository.entities.Extension;
-import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.bindingModels.extensions.AddExtensionModel;
 import com.telerik.extension_repository.models.bindingModels.extensions.EditExtensionModel;
-import com.telerik.extension_repository.models.bindingModels.extensions.RelatedExtensionModel;
 import com.telerik.extension_repository.models.viewModels.extensions.*;
 import com.telerik.extension_repository.repositories.ExtensionRepository;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -129,6 +118,7 @@ public List<ExtensionModelView> getAllPending() {
         addExtensionModel.setStatus(Status.PENDING);
         ModelMapper modelMapper = new ModelMapper();
         Extension extension = modelMapper.map(addExtensionModel, Extension.class);
+
         this.extensionRepository.saveAndFlush(extension);
     }
 

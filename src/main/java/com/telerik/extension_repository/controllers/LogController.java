@@ -1,7 +1,7 @@
 package com.telerik.extension_repository.controllers;
 
 import com.telerik.extension_repository.models.viewModels.log.LogView;
-import com.telerik.extension_repository.services.LogService;
+import com.telerik.extension_repository.services.interfaces.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

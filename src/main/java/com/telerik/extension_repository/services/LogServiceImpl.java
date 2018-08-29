@@ -4,6 +4,7 @@ import com.telerik.extension_repository.entities.Log;
 import com.telerik.extension_repository.models.bindingModels.log.LogModel;
 import com.telerik.extension_repository.models.viewModels.log.LogView;
 import com.telerik.extension_repository.repositories.LogRepository;
+import com.telerik.extension_repository.services.interfaces.LogService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

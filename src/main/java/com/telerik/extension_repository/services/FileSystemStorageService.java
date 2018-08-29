@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 import com.telerik.extension_repository.exceptions.StorageException;
 import com.telerik.extension_repository.exceptions.StorageFileNotFoundException;
+import com.telerik.extension_repository.services.interfaces.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

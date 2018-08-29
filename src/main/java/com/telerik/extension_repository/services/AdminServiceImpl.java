@@ -1,24 +1,13 @@
 package com.telerik.extension_repository.services;
 
-import com.telerik.extension_repository.entities.Authority;
-import com.telerik.extension_repository.entities.Extension;
-import com.telerik.extension_repository.entities.User;
-import com.telerik.extension_repository.entities.enums.Status;
-import com.telerik.extension_repository.models.bindingModels.extensions.AddExtensionModel;
-import com.telerik.extension_repository.models.bindingModels.extensions.EditExtensionModel;
-import com.telerik.extension_repository.models.bindingModels.extensions.RelatedExtensionModel;
-import com.telerik.extension_repository.models.bindingModels.user.AuthorityModel;
-import com.telerik.extension_repository.models.bindingModels.user.EditUserModel;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
-import com.telerik.extension_repository.models.viewModels.users.UserModelView;
-import com.telerik.extension_repository.models.viewModels.users.UserView;
-import com.telerik.extension_repository.utils.Constants;
+import com.telerik.extension_repository.services.interfaces.AdminService;
+import com.telerik.extension_repository.services.interfaces.ExtensionService;
+import com.telerik.extension_repository.services.interfaces.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional

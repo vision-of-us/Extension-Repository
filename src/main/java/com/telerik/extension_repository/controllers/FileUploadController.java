@@ -1,12 +1,10 @@
 package com.telerik.extension_repository.controllers;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import com.telerik.extension_repository.exceptions.StorageFileNotFoundException;
-import com.telerik.extension_repository.models.viewModels.extensions.ExtensionModelView;
-import com.telerik.extension_repository.services.StorageService;
+import com.telerik.extension_repository.services.interfaces.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

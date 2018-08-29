@@ -6,10 +6,10 @@ import com.telerik.extension_repository.errors.Errors;
 import com.telerik.extension_repository.exceptions.UserNotFoundException;
 import com.telerik.extension_repository.models.bindingModels.user.*;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
-import com.telerik.extension_repository.models.viewModels.users.UserModelView;
 import com.telerik.extension_repository.repositories.AuthorityRepository;
 import com.telerik.extension_repository.repositories.UserRepository;
-import com.telerik.extension_repository.utils.Constants;
+import com.telerik.extension_repository.services.interfaces.AuthorityService;
+import com.telerik.extension_repository.services.interfaces.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +22,7 @@ import java.util.*;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -51,16 +51,21 @@ public class UserServiceImpl implements UserService{
         user.setAccountNonLocked(true);
         user.setEnabled(true);
         user.setCredentialsNonExpired(true);
-        if(this.userRepository.findAll().isEmpty()) {
-            user.setAuthorities(this.getAuthorities("ROLE_ADMIN"));
-        } else {
-            user.setAuthorities(this.getAuthorities("ROLE_USER"));
-        }
+        user.setAuthorities(this.getAuthorities("ROLE_USER"));
+
+//        if(this.userRepository.findAll().isEmpty()) {
+//            user.setAuthorities(this.getAuthorities("ROLE_ADMIN"));
+//        } else {
+
+//        }
+
 //        AuthorityModel userRole = this.roleService.findByName("ROLE_USER");
 //        Authority role = this.modelMapper.map(userRole, Authority.class);
 //        user.addRole(role);
         this.userRepository.save(user);
     }
+
+
 
     @Override
     public List<EditUserModel> getAll() {
