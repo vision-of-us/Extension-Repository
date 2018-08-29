@@ -129,6 +129,11 @@ public List<ExtensionDetailsView> getAllPending() {
 
 
     @Override
+    public List<Extension> getAllExtensions() {
+        return this.extensionRepository.findAll();
+    }
+
+    @Override
     public void persist(ExtensionDetailsView addExtensionModel) {
         addExtensionModel.setStatus(Status.PENDING);
         ModelMapper modelMapper = new ModelMapper();
