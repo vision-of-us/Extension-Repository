@@ -11,7 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name = "authorities")
 public class Authority implements GrantedAuthority {
-    private String id;
+    private Long id;
 
     private String authority;
 
@@ -22,13 +22,9 @@ public class Authority implements GrantedAuthority {
     }
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true, updatable = false)
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -50,7 +46,7 @@ public class Authority implements GrantedAuthority {
         this.users = users;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name="github_data")
+@Table(name="git_hub_data")
 public class GitHubData {
 
     @Id
@@ -14,7 +14,7 @@ public class GitHubData {
 
     @OneToOne(cascade = CascadeType.ALL,
             mappedBy = "gitHubData") //TODO -> where is used with name  ..info
-    private Extension parent;
+    private Extension extension;
 
     @Column(name = "num_of_pulls")
     private String pullsCount;
@@ -29,8 +29,8 @@ public class GitHubData {
 
     }
 
-    public GitHubData(Extension parent, String pullsCount, String issuesCount, String lastCommit) {
-        this.parent = parent;
+    public GitHubData(Extension extension, String pullsCount, String issuesCount, String lastCommit) {
+        this.extension = extension;
         this.pullsCount = pullsCount;
         this.issuesCount = issuesCount;
         this.lastCommit = lastCommit;
@@ -45,11 +45,11 @@ public class GitHubData {
     }
 
     public Extension getParent() {
-        return parent;
+        return extension;
     }
 
-    public void setParent(Extension parent) {
-        this.parent = parent;
+    public void setParent(Extension extension) {
+        this.extension = extension;
     }
 
     public String getPullsCount() {

@@ -9,7 +9,7 @@ public interface GitHubRepository extends JpaRepository<GitHubData, Long> {
 
     GitHubData save(GitHubData gitHubData);
 
-    void delete(long id);
+    void deleteById(long id);
 
 
     @Query(value =

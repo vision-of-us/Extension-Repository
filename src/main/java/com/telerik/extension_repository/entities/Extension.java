@@ -45,11 +45,11 @@ public class Extension {
     @JoinColumn(name = "user_id")
     private User owner;
 
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable(name = "customers_extensions",
-//            joinColumns =  {@JoinColumn(name = "extension_id")} ,
-//            inverseJoinColumns =  {@JoinColumn(name = "user_id")})
-//    private Set<User>  extensions;
+    @OneToOne(fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(name = "git_hub_data_id")
+    private GitHubData gitHubData;
 
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

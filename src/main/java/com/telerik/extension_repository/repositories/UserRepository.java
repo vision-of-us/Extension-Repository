@@ -44,4 +44,5 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query(value = "SELECT u.extensions FROM User AS u")
     Set<Extension> findAllByExtensionsAndId();
 
+
 }
