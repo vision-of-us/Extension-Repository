@@ -41,18 +41,18 @@ public class ExtensionServiceImpl implements ExtensionService {
 //    }
 //
 @Override
-public List<ExtensionModelView> getAllPending() {
+public List<ExtensionDetailsView> getAllPending() {
     List<Extension> extensions = this.extensionRepository.findAllByStatus(Status.PENDING);
-    List<ExtensionModelView> extensionModelViews = new ArrayList<>();
+    List<ExtensionDetailsView> extensionModelViews = new ArrayList<>();
     for (Extension extension : extensions) {
-        ExtensionModelView extensionModelView = this.modelMapper.map(extension, ExtensionModelView.class);
+        ExtensionDetailsView extensionModelView = this.modelMapper.map(extension, ExtensionDetailsView.class);
         extensionModelViews.add(extensionModelView);
     }
     return extensionModelViews;
 }
 
     @Override
-    public List<ExtensionDetailsView> getAllfeatured() {
+    public List<ExtensionDetailsView> getAllFeatured() {
         List<Extension> extensions = this.extensionRepository.findAllFeatured(true);
         List<ExtensionDetailsView> extensionModelViews = new ArrayList<>();
         for (Extension extension : extensions) {
@@ -116,9 +116,20 @@ public List<ExtensionModelView> getAllPending() {
         return extensionModelViews;
     }
 
+    @Override
+    public List<ExtensionDetailsView> getAllJsons() {
+        List<Extension> extensions = this.extensionRepository.findAll();
+        List<ExtensionDetailsView> extensionModelViews = new ArrayList<>();
+        for (Extension extension : extensions) {
+            ExtensionDetailsView extensionModelView = this.modelMapper.map(extension, ExtensionDetailsView.class);
+            extensionModelViews.add(extensionModelView);
+        }
+        return extensionModelViews;
+    }
+
 
     @Override
-    public void persist(AddExtensionModel addExtensionModel) {
+    public void persist(ExtensionDetailsView addExtensionModel) {
         addExtensionModel.setStatus(Status.PENDING);
         ModelMapper modelMapper = new ModelMapper();
         Extension extension = modelMapper.map(addExtensionModel, Extension.class);

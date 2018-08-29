@@ -1,5 +1,6 @@
 package com.telerik.extension_repository.models.viewModels.extensions;
 
+import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.viewModels.tags.TagView;
 
 import java.util.Date;
@@ -19,17 +20,13 @@ public class ExtensionDetailsView {
 
     private String owner;
 
-    private Long version;
+    private Status status;
 
-    private String download_link;
+    //private Long version;
+
+    //private String download_link;
 
     private String source_repository_link;
-
-    private Integer number_of_open_issues;
-
-    private Integer number_of_pull_request;
-
-    private Date last_commit_date;
 
     private boolean isFeatured;
 
@@ -81,21 +78,6 @@ public class ExtensionDetailsView {
         this.owner = owner;
     }
 
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
-
-    public String getDownload_link() {
-        return download_link;
-    }
-
-    public void setDownload_link(String download_link) {
-        this.download_link = download_link;
-    }
 
     public String getSource_repository_link() {
         return source_repository_link;
@@ -105,35 +87,19 @@ public class ExtensionDetailsView {
         this.source_repository_link = source_repository_link;
     }
 
-    public Integer getNumber_of_open_issues() {
-        return number_of_open_issues;
-    }
-
-    public void setNumber_of_open_issues(Integer number_of_open_issues) {
-        this.number_of_open_issues = number_of_open_issues;
-    }
-
-    public Integer getNumber_of_pull_request() {
-        return number_of_pull_request;
-    }
-
-    public void setNumber_of_pull_request(Integer number_of_pull_request) {
-        this.number_of_pull_request = number_of_pull_request;
-    }
-
-    public Date getLast_commit_date() {
-        return last_commit_date;
-    }
-
-    public void setLast_commit_date(Date last_commit_date) {
-        this.last_commit_date = last_commit_date;
-    }
-
     public boolean isFeatured() {
         return isFeatured;
     }
 
     public void setFeatured(boolean featured) {
         isFeatured = featured;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

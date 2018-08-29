@@ -10,14 +10,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
-//    @GetMapping("/")
-//    public String getLoginPage(Model model) {
-//        return "home";
-//    }
-
     @GetMapping("/")
     public String getHomePage(Model model){
-        model.addAttribute("view","home");
+        model.addAttribute("view","/extensions/extensions-table");
+        return "base-layout";
+    }
+
+    @GetMapping("/unauthorized")
+    public String getNoAccessPage(Model model) {
+        model.addAttribute("view", "no-access");
         return "base-layout";
     }
 }

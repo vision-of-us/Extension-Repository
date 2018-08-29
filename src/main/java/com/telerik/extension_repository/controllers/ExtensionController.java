@@ -27,7 +27,7 @@ public class ExtensionController {
 
     @GetMapping("add")
     public String getAddExtensionPage(Model model){
-        AddExtensionModel addExtensionModel = new AddExtensionModel();
+        ExtensionDetailsView addExtensionModel = new ExtensionDetailsView();
         model.addAttribute("extension", addExtensionModel);
         model.addAttribute("view","/extensions/extension-add");
 //        model.addAttribute("type","Add");
@@ -36,7 +36,7 @@ public class ExtensionController {
 
     // WO
     @PostMapping("add")
-    public String addExtension(@ModelAttribute AddExtensionModel addExtensionModel){
+    public String addExtension(@ModelAttribute ExtensionDetailsView addExtensionModel){
        this.extensionService.persist(addExtensionModel);
         return "redirect:/extensions/all";
     }
@@ -53,7 +53,7 @@ public class ExtensionController {
 
     @GetMapping("featured")
     public String getFeaturedExtensionsPage(Model model){
-        List<ExtensionDetailsView> extensionViews = this.extensionService.getAllfeatured();
+        List<ExtensionDetailsView> extensionViews = this.extensionService.getAllFeatured();
         model.addAttribute("extensions", extensionViews);
         model.addAttribute("view","/extensions/extensions-table");
         return "base-layout";
