@@ -54,6 +54,16 @@ public class ExtensionDetailsView {
         this.description = description;
     }
 
+    private byte[] file;
+
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
+
     public Set<TagView> getTags() {
         return tags;
     }

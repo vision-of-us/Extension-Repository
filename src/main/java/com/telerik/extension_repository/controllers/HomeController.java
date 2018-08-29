@@ -16,9 +16,9 @@ public class HomeController {
         return "base-layout";
     }
 
-    @GetMapping("/unauthorized")
-    public String getNoAccessPage(Model model) {
-        model.addAttribute("view", "no-access");
-        return "base-layout";
-    }
+//    @GetMapping("/unauthorized")
+//    public String getNoAccessPage(Model model) {
+//        model.addAttribute("view", "no-access");
+//        return "base-layout";
+//    }
 }

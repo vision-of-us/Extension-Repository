@@ -1,6 +1,5 @@
 package com.telerik.extension_repository.services;
 
-
 import com.telerik.extension_repository.entities.Extension;
 import com.telerik.extension_repository.entities.GitHubData;
 import com.telerik.extension_repository.entities.enums.Status;
