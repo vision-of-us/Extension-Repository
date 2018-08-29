@@ -88,7 +88,6 @@ public class AdminController {
         return "redirect:/admin/pending";
     }
 
-
 //    @PostMapping("pending/delete/{id}")
 //    public String deleteExtension(@ModelAttribute ExtensionStatusView editPartModel, @PathVariable Long id){
 //        editPartModel.setId(id);

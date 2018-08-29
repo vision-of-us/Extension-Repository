@@ -16,7 +16,6 @@ public class GithubApiServiceImpl implements GithubApiService {
 
     @Override
     public GitHub getGHConnection() throws IOException {
-//        return GitHub.connectUsingOAuth("4d3a0f046ede5e3a9ab2e2f3b133e66129f0104b");
         return GitHub.connectUsingOAuth("5c1a77eec3047ae6b562a55a7c0e4d4735cb38ef");
     }
 
