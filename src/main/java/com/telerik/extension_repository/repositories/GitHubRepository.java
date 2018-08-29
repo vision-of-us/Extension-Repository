@@ -3,8 +3,11 @@ package com.telerik.extension_repository.repositories;
 import com.telerik.extension_repository.entities.GitHubData;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.*;
+import org.springframework.stereotype.Repository;
+
 import java.util.*;
 
+@Repository
 public interface GitHubRepository extends JpaRepository<GitHubData, Long> {
 
     GitHubData save(GitHubData gitHubData);

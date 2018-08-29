@@ -2,12 +2,14 @@ package com.telerik.extension_repository.services;
 
 
 import com.telerik.extension_repository.entities.Extension;
+import com.telerik.extension_repository.entities.GitHubData;
 import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.bindingModels.extensions.AddExtensionModel;
 import com.telerik.extension_repository.models.bindingModels.extensions.EditExtensionModel;
 import com.telerik.extension_repository.models.viewModels.extensions.*;
 import com.telerik.extension_repository.repositories.ExtensionRepository;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
+import com.telerik.extension_repository.services.interfaces.GithubApiService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,14 +24,16 @@ import java.util.Optional;
 public class ExtensionServiceImpl implements ExtensionService {
     private final ExtensionRepository extensionRepository;
     private final ModelMapper modelMapper;
+    private final GithubApiService githubApiService;
 
     @Autowired
-    public ExtensionServiceImpl(ExtensionRepository extensionRepository, ModelMapper modelMapper) {
+    public ExtensionServiceImpl(ExtensionRepository extensionRepository, ModelMapper modelMapper, GithubApiService githubApiService) {
         this.extensionRepository = extensionRepository;
         this.modelMapper = modelMapper;
+        this.githubApiService = githubApiService;
     }
 
-//    public void persist(ExtensionModel extensionModel) {
+    //    public void persist(ExtensionModel extensionModel) {
 //        ModelMapper modelMapper = new ModelMapper();
 //        Extension extension = modelMapper.map(extensionModel, Extension.class);
 //        this.extensionRepository.saveAndFlush(extension);
@@ -118,8 +122,19 @@ public List<ExtensionModelView> getAllPending() {
         addExtensionModel.setStatus(Status.PENDING);
         ModelMapper modelMapper = new ModelMapper();
         Extension extension = modelMapper.map(addExtensionModel, Extension.class);
+        String fullUrl = extension.getSource_repository_link();
 
+        GitHubData gitHubData = null;
+        try {
+            gitHubData = githubApiService.updateGithubData(fullUrl);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        extension.setGitHubData(gitHubData);
         this.extensionRepository.saveAndFlush(extension);
+
+
     }
 
     @Override

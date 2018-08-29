@@ -151,4 +151,12 @@ public class Extension {
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
+
+    public GitHubData getGitHubData() {
+        return gitHubData;
+    }
+
+    public void setGitHubData(GitHubData gitHubData) {
+        this.gitHubData = gitHubData;
+    }
 }

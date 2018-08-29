@@ -4,10 +4,12 @@ import com.telerik.extension_repository.entities.GitHubData;
 import com.telerik.extension_repository.services.interfaces.GithubApiService;
 import org.kohsuke.github.GHIssueState;
 import org.kohsuke.github.GitHub;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Date;
 
+@Service
 public class GithubApiServiceImpl implements GithubApiService {
 
     private static final String GITHUB_URL = "https://github.com/";   //TODO -> put in Constants
@@ -18,13 +20,13 @@ public class GithubApiServiceImpl implements GithubApiService {
     }
 
     @Override
-    public void updateGithubData(GitHubData data) throws IOException {
-        String fullUrl = data.getExtension().getSource_repository_link();
+    public GitHubData updateGithubData(String fullUrl) throws IOException {
         String url = fullUrl.substring(GITHUB_URL.length());
-
-        data.setIssuesCount(getOpenIssues(url));
-        data.setLastCommit(getCommitDate(url));
-        data.setPullsCount(getPullsCount(url));
+        GitHubData gitHubData = new GitHubData();
+        gitHubData.setIssuesCount(getOpenIssues(url));
+        gitHubData.setLastCommit(getCommitDate(url));
+        gitHubData.setPullsCount(getPullsCount(url));
+        return gitHubData;
     }
 
     @Override
