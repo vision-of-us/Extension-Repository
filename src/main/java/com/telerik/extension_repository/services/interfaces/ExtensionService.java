@@ -22,6 +22,7 @@ public interface ExtensionService {
     void update(ExtensionStatusView extensionModel);
     void approve(ExtensionStatusView addExtensionModel);
     List<ExtensionModelView> getAll();
+    List<Extension> getAllExtensions();
     ExtensionDetailsView getByIdToDetailsPage(Long id);
     List<ExtensionModelView> getAllByName(String name);
     List<ExtensionDetailsView> getAllJsons();
