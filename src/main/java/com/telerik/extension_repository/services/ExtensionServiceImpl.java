@@ -61,6 +61,17 @@ public List<ExtensionDetailsView> getAllPending() {
         return extensionModelViews;
     }
 
+    @Override
+    public List<ExtensionDetailsView> getAllSortedByDate() {
+        List<Extension> extensions = this.extensionRepository.getAllSortedByDate();
+        List<ExtensionDetailsView> modelViews = new ArrayList<>();
+        for (Extension extension : extensions) {
+            ExtensionDetailsView model = this.modelMapper.map(extension, ExtensionDetailsView.class);
+            modelViews.add(model);
+        }
+        return modelViews;
+    }
+
 
     @Override
     public List<ExtensionModelView> getAll() {

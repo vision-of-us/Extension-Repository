@@ -3,6 +3,7 @@ package com.telerik.extension_repository.controllers;
 import com.telerik.extension_repository.exceptions.StorageFileNotFoundException;
 import com.telerik.extension_repository.models.bindingModels.extensions.AddExtensionModel;
 import com.telerik.extension_repository.models.bindingModels.extensions.EditExtensionModel;
+import com.telerik.extension_repository.models.bindingModels.extensions.ExtensionModel;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionDetailsView;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionModelView;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionStatusView;
@@ -67,6 +68,22 @@ public class ExtensionController {
         model.addAttribute("view","/extensions/extensions-table");
         return "base-layout";
     }
+
+
+
+
+    @GetMapping("new")
+    public String getNewestExtensionsPage(Model model){
+        List<ExtensionDetailsView> extensionViews = this.extensionService.getAllSortedByDate();
+        model.addAttribute("extensions", extensionViews);
+        model.addAttribute("view","/extensions/extensions-table-list-new");
+        return "base-layout";
+    }
+
+
+
+
+
 
     @GetMapping("{id}")
     public String getExtensionDetailsPage(Model model, @PathVariable Long id){

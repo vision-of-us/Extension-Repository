@@ -38,6 +38,17 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     "WHERE e.isFeatured = :isFeatured")
     List<Extension> findAllFeatured(@Param("isFeatured") boolean isFeatured);
 
+
+
+    @Query(value =
+            "SELECT e FROM Extension AS e " +
+                    "JOIN GitHubData g " +
+                    "ON e.id = g.id " +
+                    "ORDER BY g.lastCommit")
+    List<Extension> getAllSortedByDate();
+
+
+
     List<Extension> getAllByTags(String tag);
 
     List<Extension> getAllByNameOrderByNameAsc(String name);
@@ -47,7 +58,8 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
     @Modifying
     @Query("UPDATE Extension " +
             "SET name = :name, description = :description, status =:status WHERE id = :id")
-    void update(@Param("name") String name, @Param("description") String description, @Param("status") Status status, @Param("id") Long id);
+    void update(@Param("name") String name, @Param("description") String description,
+                @Param("status") Status status, @Param("id") Long id);
 
     @Query(value =
             "SELECT e.file FROM Extension AS e " +

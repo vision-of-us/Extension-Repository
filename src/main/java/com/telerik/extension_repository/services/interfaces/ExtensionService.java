@@ -29,6 +29,7 @@ public interface ExtensionService {
     void delete(Long id);
     List<ExtensionDetailsView> getAllPending();
     List<ExtensionDetailsView> getAllFeatured();
+    List<ExtensionDetailsView> getAllSortedByDate();
 //    Blob downloadFile(Long id) throws IOException, SQLException;
 //    Extension downloadFileAsExtension(Long id);
 
