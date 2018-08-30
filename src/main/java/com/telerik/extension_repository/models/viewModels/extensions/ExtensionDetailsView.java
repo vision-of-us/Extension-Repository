@@ -1,6 +1,7 @@
 package com.telerik.extension_repository.models.viewModels.extensions;
 
 import com.telerik.extension_repository.entities.enums.Status;
+import com.telerik.extension_repository.models.bindingModels.user.LoggedUser;
 import com.telerik.extension_repository.models.viewModels.tags.TagView;
 
 import java.util.Date;
@@ -16,15 +17,33 @@ public class ExtensionDetailsView {
 
     private Long number_of_downloads;
 
+    private String tagString;
+
     private Set<TagView> tags;
 
-    private String owner;
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public String getDownload_link() {
+        return download_link;
+    }
+
+    public void setDownload_link(String download_link) {
+        this.download_link = download_link;
+    }
+
+    private LoggedUser owner;
 
     private Status status;
 
-    //private Long version;
+    private Long version;
 
-    //private String download_link;
+    private String download_link;
 
     private String source_repository_link;
 
@@ -80,14 +99,13 @@ public class ExtensionDetailsView {
         this.number_of_downloads = number_of_downloads;
     }
 
-    public String getOwner() {
+    public LoggedUser getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(LoggedUser owner) {
         this.owner = owner;
     }
-
 
     public String getSource_repository_link() {
         return source_repository_link;
@@ -111,5 +129,13 @@ public class ExtensionDetailsView {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getTagString() {
+        return tagString;
+    }
+
+    public void setTagString(String tagString) {
+        this.tagString = tagString;
     }
 }

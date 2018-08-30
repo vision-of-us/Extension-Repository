@@ -1,6 +1,7 @@
 package com.telerik.extension_repository.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,6 +19,14 @@ public class Tag {
             joinColumns =  {@JoinColumn(name = "tag_id")} ,
             inverseJoinColumns =  {@JoinColumn(name = "extension_id")})
     private Set<Extension> extensions;
+
+    public Tag() {
+    }
+
+    public Tag(String name) {
+        this.name = name;
+        this.extensions = new HashSet<>();
+    }
 
     public String getName() {
         return name;

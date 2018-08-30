@@ -2,21 +2,24 @@ package com.telerik.extension_repository.services;
 
 import com.telerik.extension_repository.entities.Extension;
 import com.telerik.extension_repository.entities.GitHubData;
+import com.telerik.extension_repository.entities.Tag;
+import com.telerik.extension_repository.entities.User;
 import com.telerik.extension_repository.entities.enums.Status;
-import com.telerik.extension_repository.models.bindingModels.extensions.AddExtensionModel;
 import com.telerik.extension_repository.models.bindingModels.extensions.EditExtensionModel;
 import com.telerik.extension_repository.models.viewModels.extensions.*;
 import com.telerik.extension_repository.repositories.ExtensionRepository;
+import com.telerik.extension_repository.repositories.TagRepository;
+import com.telerik.extension_repository.repositories.UserRepository;
 import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.GithubApiService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -24,6 +27,19 @@ public class ExtensionServiceImpl implements ExtensionService {
     private final ExtensionRepository extensionRepository;
     private final ModelMapper modelMapper;
     private final GithubApiService githubApiService;
+    private UserRepository userRepository;
+    private TagRepository tagRepository;
+
+    public ExtensionServiceImpl(ExtensionRepository extensionRepository,
+                                ModelMapper modelMapper,
+                                GithubApiService githubApiService,
+                                UserRepository userRepository, TagRepository tagRepository) {
+        this.extensionRepository = extensionRepository;
+        this.modelMapper = modelMapper;
+        this.githubApiService = githubApiService;
+        this.userRepository = userRepository;
+        this.tagRepository = tagRepository;
+    }
 
     @Autowired
     public ExtensionServiceImpl(ExtensionRepository extensionRepository, ModelMapper modelMapper, GithubApiService githubApiService) {
@@ -157,10 +173,19 @@ public List<ExtensionDetailsView> getAllPending() {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+
         extension.setGitHubData(gitHubData);
+        extension.setName(addExtensionModel.getName());
+        extension.setDescription(addExtensionModel.getDescription());
+
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+
+        User userEntity = this.userRepository.findOneByUsername(user.getUsername());
+        extension.setOwner(userEntity);
+        HashSet<Tag> tags=this.findTagsFromString(addExtensionModel.getTagString());
+        extension.setTags(tags);
         this.extensionRepository.saveAndFlush(extension);
-
-
     }
 
     @Override
@@ -191,13 +216,6 @@ public List<ExtensionDetailsView> getAllPending() {
         return extensionStatusView;
     }
 
-//    @Override
-//    public void update(EditExtensionModel extensionModel) {
-//        ModelMapper modelMapper = new ModelMapper();
-//        Extension extension = modelMapper.map(extensionModel, Extension.class);
-//        this.extensionRepository.saveAndFlush(extension);
-//    }
-
     @Override
     public void update(ExtensionStatusView extensionModel) {
         this.extensionRepository.update(extensionModel.getName(), extensionModel.getDescription(),extensionModel.getStatus() ,extensionModel.getId());
@@ -207,5 +225,25 @@ public List<ExtensionDetailsView> getAllPending() {
     public void delete(Long id) {
         this.extensionRepository.deleteById(id);
     }
+
+
+    private HashSet<Tag> findTagsFromString(String tagString) {
+        HashSet<Tag> tags = new HashSet<>();
+        String[] tagNames = tagString.split(",\\s*");
+
+        for (String tagName : tagNames) {
+            Tag currentTag = this.tagRepository.findByName(tagName);
+
+            if (currentTag == null) {
+                currentTag = new Tag(tagName);
+                this.tagRepository.saveAndFlush(currentTag);
+            }
+
+            tags.add(currentTag);
+        }
+
+        return tags;
+    }
+
 
 }
