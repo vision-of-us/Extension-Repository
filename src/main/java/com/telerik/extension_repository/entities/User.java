@@ -115,7 +115,16 @@ public class User implements UserDetails {
         this.authorities = authorities;
     }
 
-    public void addRole(Authority role) {
-        this.authorities.add(role);
+    @Transient
+    public boolean isAdmin() {
+        return this.getAuthorities()
+                .stream()
+                .anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"));
+    }
+
+    @Transient
+    public boolean isAuthor(Extension extension) {
+        return Objects.equals(this.getId(),
+                extension.getOwner().getId());
     }
 }

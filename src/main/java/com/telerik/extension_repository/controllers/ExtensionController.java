@@ -84,11 +84,21 @@ public class ExtensionController {
         return "base-layout";
     }
 
+//    // get Extension details page WO
+//    @GetMapping("{id}")
+//    public String getExtensionDetailsPage(Model model, @PathVariable Long id) {
+//        ExtensionDetailsView extensionDetailsView = this.extensionService.getByIdToDetailsPage(id);
+//        model.addAttribute("extension", extensionDetailsView);
+//        model.addAttribute("view", "/extensions/extension-details");
+//        return "base-layout";
+//    }
+
+    // get Extension details page WO
     @GetMapping("{id}")
     public String getExtensionDetailsPage(Model model, @PathVariable Long id) {
         ExtensionDetailsView extensionDetailsView = this.extensionService.getByIdToDetailsPage(id);
         model.addAttribute("extension", extensionDetailsView);
-        model.addAttribute("view", "/extensions/extension-details");
+        model.addAttribute("view", "/extensions/details");
         return "base-layout";
     }
 
