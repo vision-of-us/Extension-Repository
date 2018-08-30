@@ -13,10 +13,11 @@ import java.util.Date;
 public class GithubApiServiceImpl implements GithubApiService {
 
     private static final String GITHUB_URL = "https://github.com/";   //TODO -> put in Constants
+    private static final String gitKey = "5c1a77eec3047ae6b562a55a7c0e4d4735cb38ef";
 
     @Override
     public GitHub getGHConnection() throws IOException {
-        return GitHub.connectUsingOAuth("5c1a77eec3047ae6b562a55a7c0e4d4735cb38ef");
+        return GitHub.connectUsingOAuth(gitKey);
     }
 
     @Override
