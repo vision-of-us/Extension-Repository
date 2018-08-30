@@ -19,7 +19,7 @@ public class ExtensionDetailsView {
 
     private String tagString;
 
-    private Set<TagView> tags;
+    //private Set<TagView> tags;
 
     public Long getVersion() {
         return version;
@@ -83,13 +83,13 @@ public class ExtensionDetailsView {
         this.file = file;
     }
 
-    public Set<TagView> getTags() {
-        return tags;
-    }
-
-    public void setTags(Set<TagView> tags) {
-        this.tags = tags;
-    }
+//    public Set<TagView> getTags() {
+//        return tags;
+//    }
+//
+//    public void setTags(Set<TagView> tags) {
+//        this.tags = tags;
+//    }
 
     public Long getNumber_of_downloads() {
         return number_of_downloads;

@@ -14,6 +14,8 @@ import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.GithubApiService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,7 @@ public class ExtensionServiceImpl implements ExtensionService {
     private UserRepository userRepository;
     private TagRepository tagRepository;
 
+    @Autowired
     public ExtensionServiceImpl(ExtensionRepository extensionRepository,
                                 ModelMapper modelMapper,
                                 GithubApiService githubApiService,
@@ -41,12 +44,12 @@ public class ExtensionServiceImpl implements ExtensionService {
         this.tagRepository = tagRepository;
     }
 
-    @Autowired
-    public ExtensionServiceImpl(ExtensionRepository extensionRepository, ModelMapper modelMapper, GithubApiService githubApiService) {
-        this.extensionRepository = extensionRepository;
-        this.modelMapper = modelMapper;
-        this.githubApiService = githubApiService;
-    }
+//    @Autowired
+//    public ExtensionServiceImpl(ExtensionRepository extensionRepository, ModelMapper modelMapper, GithubApiService githubApiService) {
+//        this.extensionRepository = extensionRepository;
+//        this.modelMapper = modelMapper;
+//        this.githubApiService = githubApiService;
+//    }
 
     //    public void persist(ExtensionModel extensionModel) {
 //        ModelMapper modelMapper = new ModelMapper();
@@ -160,6 +163,7 @@ public List<ExtensionDetailsView> getAllPending() {
     }
 
     @Override
+    @PreAuthorize("isAuthenticated()")
     public void persist(ExtensionDetailsView addExtensionModel) {
         addExtensionModel.setStatus(Status.PENDING);
         ModelMapper modelMapper = new ModelMapper();
@@ -180,7 +184,7 @@ public List<ExtensionDetailsView> getAllPending() {
 
         UserDetails user = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
-
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User userEntity = this.userRepository.findOneByUsername(user.getUsername());
         extension.setOwner(userEntity);
         HashSet<Tag> tags=this.findTagsFromString(addExtensionModel.getTagString());
