@@ -32,7 +32,8 @@ public class UserTest {
     @Test
     public void addRoleWhenUserRoleGivenShouldReturnCorrectRoleName() {
         //Act
-        Authority authority = new Authority("ROLE_USER");
+        Authority authority = new Authority();
+        authority.setAuthority("ROLE_USER");
         Set<Authority> authorities = new HashSet<>();
         authorities.add(authority);
         this.user.setAuthorities(authorities);
