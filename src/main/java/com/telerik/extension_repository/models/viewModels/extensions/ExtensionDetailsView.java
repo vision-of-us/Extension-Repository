@@ -1,5 +1,6 @@
 package com.telerik.extension_repository.models.viewModels.extensions;
 
+import com.telerik.extension_repository.entities.Tag;
 import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.bindingModels.user.LoggedUser;
 import com.telerik.extension_repository.models.viewModels.tags.TagView;
@@ -19,7 +20,7 @@ public class ExtensionDetailsView {
 
     private String tagString;
 
-    //private Set<TagView> tags;
+    private Set<Tag> tags;
 
     public Long getVersion() {
         return version;
@@ -83,13 +84,13 @@ public class ExtensionDetailsView {
         this.file = file;
     }
 
-//    public Set<TagView> getTags() {
-//        return tags;
-//    }
-//
-//    public void setTags(Set<TagView> tags) {
-//        this.tags = tags;
-//    }
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
 
     public Long getNumber_of_downloads() {
         return number_of_downloads;

@@ -168,6 +168,28 @@ public List<ExtensionDetailsView> getAllPending() {
         addExtensionModel.setStatus(Status.PENDING);
         ModelMapper modelMapper = new ModelMapper();
         Extension extension = modelMapper.map(addExtensionModel, Extension.class);
+        GitHubData gitHubData = getGitHubData(extension);
+        extension.setGitHubData(gitHubData);
+        extension.setName(addExtensionModel.getName());
+        extension.setDescription(addExtensionModel.getDescription());
+        User userEntity = getCurrentUser();
+        extension.setOwner(userEntity);
+        HashSet<Tag> tags = getTags(addExtensionModel);
+        extension.setTags(tags);
+        this.extensionRepository.saveAndFlush(extension);
+    }
+
+    private HashSet<Tag> getTags(ExtensionDetailsView addExtensionModel) {
+        return this.findTagsFromString(addExtensionModel.getTagString());
+    }
+
+    private User getCurrentUser() {
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        return this.userRepository.findOneByUsername(user.getUsername());
+    }
+
+    private GitHubData getGitHubData(Extension extension) {
         String fullUrl = extension.getSource_repository_link();
 
         GitHubData gitHubData = null;
@@ -177,19 +199,7 @@ public List<ExtensionDetailsView> getAllPending() {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-
-        extension.setGitHubData(gitHubData);
-        extension.setName(addExtensionModel.getName());
-        extension.setDescription(addExtensionModel.getDescription());
-
-        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal();
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User userEntity = this.userRepository.findOneByUsername(user.getUsername());
-        extension.setOwner(userEntity);
-        HashSet<Tag> tags=this.findTagsFromString(addExtensionModel.getTagString());
-        extension.setTags(tags);
-        this.extensionRepository.saveAndFlush(extension);
+        return gitHubData;
     }
 
     @Override
@@ -211,6 +221,15 @@ public List<ExtensionDetailsView> getAllPending() {
         return extensionModel;
 
 
+    }
+
+    private boolean isUserAuthorOrAdmin(Extension article){
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+
+        User userEntity = this.userRepository.findOneByUsername(user.getUsername());
+
+        return userEntity.isAdmin() || userEntity.isAuthor(article);
     }
 
     @Override
