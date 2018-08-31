@@ -1,6 +1,9 @@
 package com.telerik.extension_repository;
 
+import com.telerik.extension_repository.repositories.GitHubRepository;
+import com.telerik.extension_repository.services.GithubApiServiceImpl;
 import com.telerik.extension_repository.services.StorageProperties;
+import com.telerik.extension_repository.services.interfaces.GithubApiService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -14,6 +17,8 @@ public class ExtensionRepositoryApplication {
     public static void main(String[] args) throws IOException {
 
         SpringApplication.run(ExtensionRepositoryApplication.class, args);
+        GithubApiService ghs = new GithubApiServiceImpl();
+        ghs.updateGithubDataAll();
 
 
 //        GitHub gitHub = GitHub.connectUsingOAuth("5c1a77eec3047ae6b562a55a7c0e4d4735cb38ef");

@@ -1,6 +1,5 @@
 package com.telerik.extension_repository.repositories;
 
-
 import com.telerik.extension_repository.entities.*;
 import com.telerik.extension_repository.entities.enums.Status;
 import org.springframework.data.jpa.repository.*;
@@ -38,14 +37,14 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
                     "WHERE e.isFeatured = :isFeatured")
     List<Extension> findAllFeatured(@Param("isFeatured") boolean isFeatured);
 
-
-
     @Query(value =
             "SELECT e FROM Extension AS e " +
                     "JOIN GitHubData g " +
                     "ON e.id = g.id " +
                     "ORDER BY g.lastCommit")
     List<Extension> getAllSortedByDate();
+
+
 
 
 
@@ -60,6 +59,11 @@ public interface ExtensionRepository extends JpaRepository<Extension, Long> {
             "SET name = :name, description = :description, status =:status WHERE id = :id")
     void update(@Param("name") String name, @Param("description") String description,
                 @Param("status") Status status, @Param("id") Long id);
+
+
+
+
+
 
     @Query(value =
             "SELECT e.file FROM Extension AS e " +

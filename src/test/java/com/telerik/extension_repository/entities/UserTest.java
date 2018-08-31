@@ -1,8 +1,11 @@
 package com.telerik.extension_repository.entities;
 
+import org.apache.commons.logging.LogFactory;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
@@ -12,6 +15,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 public class UserTest {
+
+    private static final Logger log = LoggerFactory.getLogger(UserTest.class);
 
     private static final String EXPECTED_ROLE_NAME = "ROLE_USER";
 

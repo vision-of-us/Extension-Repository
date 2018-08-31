@@ -12,6 +12,6 @@ public interface GithubApiService {
     String getOpenIssues(String url) throws IOException;
     Date getCommitDate(String url) throws IOException;
     String getPullsCount(String url) throws IOException;
-
+    void updateGithubDataAll() throws IOException;
 
 }

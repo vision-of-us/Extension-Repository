@@ -104,13 +104,23 @@ public List<ExtensionDetailsView> getAllPending() {
     }
 
     @Override
+    public List<ExtensionDetailsView> getAllExt() {
+        List<Extension> extensions = this.extensionRepository.findAll();
+        List<ExtensionDetailsView> extensionDetailsViews = new ArrayList<>();
+        for (Extension extension : extensions) {
+            ExtensionDetailsView model = this.modelMapper.map(extension, ExtensionDetailsView.class);
+            extensionDetailsViews.add(model);
+        }
+        return extensionDetailsViews;
+    }
+
+    @Override
     public ExtensionDetailsView getByIdToDetailsPage(Long id) {
         Extension extension = this.extensionRepository.getOne(id);
         ModelMapper modelMapper = new ModelMapper();
         ExtensionDetailsView extensionModel = null;
         if (extension != null) {
             extensionModel = modelMapper.map(extension, ExtensionDetailsView.class);
-
         }
         return extensionModel;
     }

@@ -1,6 +1,6 @@
 package com.telerik.extension_repository.models.viewModels.extensions;
 
-import com.telerik.extension_repository.entities.Tag;
+import com.telerik.extension_repository.entities.GitHubData;
 import com.telerik.extension_repository.entities.enums.Status;
 import com.telerik.extension_repository.models.bindingModels.user.LoggedUser;
 import com.telerik.extension_repository.models.viewModels.tags.TagView;
@@ -20,7 +20,7 @@ public class ExtensionDetailsView {
 
     private String tagString;
 
-    private Set<Tag> tags;
+    //private Set<TagView> tags;
 
     public Long getVersion() {
         return version;
@@ -49,6 +49,8 @@ public class ExtensionDetailsView {
     private String source_repository_link;
 
     private boolean isFeatured;
+
+    private GitHubData gitHubData;
 
     public Long getId() {
         return id;
@@ -80,17 +82,25 @@ public class ExtensionDetailsView {
         return file;
     }
 
+    public GitHubData getGitHubData() {
+        return gitHubData;
+    }
+
+    public void setGitHubData(GitHubData gitHubData) {
+        this.gitHubData = gitHubData;
+    }
+
     public void setFile(byte[] file) {
         this.file = file;
     }
 
-    public Set<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
-    }
+//    public Set<TagView> getTags() {
+//        return tags;
+//    }
+//
+//    public void setTags(Set<TagView> tags) {
+//        this.tags = tags;
+//    }
 
     public Long getNumber_of_downloads() {
         return number_of_downloads;
