@@ -29,7 +29,6 @@ public class AdminController {
     @Autowired
     private ExtensionService extensionService;
 
-
     @GetMapping("extensions")
     public String getAdminPage(Model model){
         List<ExtensionModelView> extensionViews = this.extensionService.getAll();
