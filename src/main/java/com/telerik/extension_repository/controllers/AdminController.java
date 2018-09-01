@@ -1,6 +1,5 @@
 package com.telerik.extension_repository.controllers;
 
-
 import com.telerik.extension_repository.exceptions.UserNotFoundException;
 import com.telerik.extension_repository.models.bindingModels.user.EditUserModel;
 import com.telerik.extension_repository.models.viewModels.extensions.ExtensionDetailsView;
