@@ -14,6 +14,7 @@ import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.GithubApiService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,17 +27,19 @@ import java.util.*;
 @Service
 @Transactional
 public class ExtensionServiceImpl implements ExtensionService {
+
     private final ExtensionRepository extensionRepository;
     private final ModelMapper modelMapper;
     private final GithubApiService githubApiService;
     private UserRepository userRepository;
     private TagRepository tagRepository;
 
+
     @Autowired
-    public ExtensionServiceImpl(ExtensionRepository extensionRepository,
-                                ModelMapper modelMapper,
-                                GithubApiService githubApiService,
-                                UserRepository userRepository, TagRepository tagRepository) {
+    public ExtensionServiceImpl(@Lazy ExtensionRepository extensionRepository, @Lazy
+                                ModelMapper modelMapper, @Lazy
+                                GithubApiService githubApiService, @Lazy
+                                UserRepository userRepository, @Lazy TagRepository tagRepository) {
         this.extensionRepository = extensionRepository;
         this.modelMapper = modelMapper;
         this.githubApiService = githubApiService;
@@ -51,7 +54,7 @@ public class ExtensionServiceImpl implements ExtensionService {
 //        this.githubApiService = githubApiService;
 //    }
 
-    //    public void persist(ExtensionModel extensionModel) {
+//    public void persist(ExtensionModel extensionModel) {
 //        ModelMapper modelMapper = new ModelMapper();
 //        Extension extension = modelMapper.map(extensionModel, Extension.class);
 //        this.extensionRepository.saveAndFlush(extension);

@@ -18,14 +18,17 @@ import static com.telerik.extension_repository.utils.Constants.*;
 @Service
 public class GithubApiServiceImpl implements GithubApiService {
 
+    @Autowired
     private ExtensionService extensionService;
-    private GitHubRepository gitHubRepository;
 
     @Autowired
-    public GithubApiServiceImpl(ExtensionService extensionService, GitHubRepository gitHubRepository) {
-        this.extensionService = extensionService;
-        this.gitHubRepository = gitHubRepository;
-    }
+    private GitHubRepository gitHubRepository;
+
+//    @Autowired
+//    public GithubApiServiceImpl(ExtensionService extensionService, GitHubRepository gitHubRepository) {
+//        this.extensionService = extensionService;
+//        this.gitHubRepository = gitHubRepository;
+//    }
 
     public GithubApiServiceImpl() {
 

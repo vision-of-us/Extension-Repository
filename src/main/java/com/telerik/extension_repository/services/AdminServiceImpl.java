@@ -6,6 +6,7 @@ import com.telerik.extension_repository.services.interfaces.ExtensionService;
 import com.telerik.extension_repository.services.interfaces.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,7 @@ public class AdminServiceImpl implements AdminService {
     private ExtensionService extensionService;
 
     @Autowired
-    public AdminServiceImpl(UserService userService, ModelMapper modelMapper, ExtensionService extensionService) {
+    public AdminServiceImpl(@Lazy UserService userService, @Lazy ModelMapper modelMapper, @Lazy ExtensionService extensionService) {
         this.userService = userService;
         this.modelMapper = modelMapper;
         this.extensionService = extensionService;
