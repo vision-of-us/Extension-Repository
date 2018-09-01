@@ -11,18 +11,16 @@ import org.kohsuke.github.GitHub;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import static com.telerik.extension_repository.utils.Constants.*;
 
 @Service
 public class GithubApiServiceImpl implements GithubApiService {
 
     private ExtensionService extensionService;
     private GitHubRepository gitHubRepository;
-    private static final String GITHUB_URL = "https://github.com/";                      //TODO -> put in Constants
-    private static final String gitKey = "5c1a77eec3047ae6b562a55a7c0e4d4735cb38ef";
 
     @Autowired
     public GithubApiServiceImpl(ExtensionService extensionService, GitHubRepository gitHubRepository) {
@@ -36,7 +34,7 @@ public class GithubApiServiceImpl implements GithubApiService {
 
     @Override
     public GitHub getGHConnection() throws IOException {
-        return GitHub.connectUsingOAuth(gitKey);
+        return GitHub.connectUsingOAuth(GIT_KEY);
     }
 
     public void updateGithubDataAll() {
